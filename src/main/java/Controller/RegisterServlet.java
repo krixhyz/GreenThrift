@@ -147,7 +147,13 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        String role = "user"; // ✅ Default role
+        
+        String role;
+        if ("admin@gt.com".equalsIgnoreCase(email)) {
+            role = "admin";
+        } else {
+            role = "user";
+        }
 
         // Validation
         if (username == null || username.trim().isEmpty() ||
