@@ -1,84 +1,85 @@
 --CREATE DATABASE coursework;
 --USE coursework;
 
--- Create users table (includes both Admins and Customers)
-CREATE TABLE `users` (
-    UserID INT AUTO_INCREMENT PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
-    Email VARCHAR(100) UNIQUE,
-    PhoneNumber VARCHAR(15),
-    UserName VARCHAR(50),
-    Password VARCHAR(255),
-    Role ENUM('admin', 'customer') NOT NULL
+-- Create users table
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    role VARCHAR(20) NOT NULL DEFAULT 'user',
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    phone_number VARCHAR(15),
+    image_path VARCHAR(255)
 );
 
--- Create Category table
-CREATE TABLE Category (
+-- Create category table
+CREATE TABLE category (
     CategoryID INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(100),
     Description TEXT
 );
 
--- Create Products table (uses UserID instead of AdminID)
-CREATE TABLE Products (
+-- Create products table
+CREATE TABLE products (
     ProductID INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(100),
     Description TEXT,
     Price DECIMAL(10,2),
     Stock INT,
     DateAdded DATE,
-    UserID INT,
     CategoryID INT,
-    FOREIGN KEY (UserID) REFERENCES `User`(UserID),
-    FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID)
+    AdminID INT,
+    FOREIGN KEY (CategoryID) REFERENCES category(CategoryID),
+    FOREIGN KEY (AdminID) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
--- Create Cart table
-CREATE TABLE Cart (
+-- Create cart table
+CREATE TABLE cart (
     CartID INT AUTO_INCREMENT PRIMARY KEY,
     UserID INT,
-    FOREIGN KEY (UserID) REFERENCES `User`(UserID)
+    FOREIGN KEY (UserID) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
--- Create Cart_items table
-CREATE TABLE Cart_items (
+-- Create cart_items table
+CREATE TABLE cart_items (
     CartItemID INT AUTO_INCREMENT PRIMARY KEY,
     CartID INT,
     ProductID INT,
     Quantity INT,
-    FOREIGN KEY (CartID) REFERENCES Cart(CartID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+    FOREIGN KEY (CartID) REFERENCES cart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES products(ProductID)
 );
 
--- Create Order table
-CREATE TABLE `Order` (
+-- Create order table
+CREATE TABLE `order` (
     OrderID INT AUTO_INCREMENT PRIMARY KEY,
-    UserID INT,
     OrderDate DATE,
     TotalAmount DECIMAL(10,2),
     Status VARCHAR(50),
-    FOREIGN KEY (UserID) REFERENCES `User`(UserID)
+    UserID INT,
+    FOREIGN KEY (UserID) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
--- Create Order_items table
-CREATE TABLE Order_items (
+-- Create order_items table
+CREATE TABLE order_items (
     OrderItemID INT AUTO_INCREMENT PRIMARY KEY,
     OrderID INT,
     ProductID INT,
     Quantity INT,
     PriceAtPurchase DECIMAL(10,2),
-    FOREIGN KEY (OrderID) REFERENCES `Order`(OrderID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+    FOREIGN KEY (OrderID) REFERENCES `order`(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES products(ProductID)
 );
 
--- Create Payment table
-CREATE TABLE Payment (
+-- Create payment table
+CREATE TABLE payment (
     PaymentID INT AUTO_INCREMENT PRIMARY KEY,
     OrderID INT,
     PaymentDate DATE,
     AmountPaid DECIMAL(10,2),
     PaymentMethod VARCHAR(50),
     PaymentStatus VARCHAR(50),
-    FOREIGN KEY (OrderID) REFERENCES `Order`(OrderID)
+    FOREIGN KEY (OrderID) REFERENCES `order`(OrderID)
 );

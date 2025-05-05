@@ -90,6 +90,35 @@ nav ul li a:hover {
     background: #0056b3;
 }
 
+/*search-bar css*/
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-form input[type="text"] {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.search-form button {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
+
+
 /* Hero Section */
 .hero {
     background: url('https://via.placeholder.com/1200x600') center/cover no-repeat;
