@@ -1,8 +1,7 @@
 package Controller;
 
-import DAO.ProductDAO;
+import DAO.CartDAO;
 import Model.CartItem;
-import Model.Product;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,30 +13,49 @@ import java.util.*;
 public class CartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         int productId = Integer.parseInt(request.getParameter("productId"));
+        String action = request.getParameter("action");
+
         HttpSession session = request.getSession();
         List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
-
         if (cart == null) {
             cart = new ArrayList<>();
         }
 
-        boolean found = false;
-        for (CartItem item : cart) {
-            if (item.getProduct().getProductID() == productId) {
-                item.setQuantity(item.getQuantity() + 1);
-                found = true;
-                break;
-            }
-        }
+        CartDAO cartDAO = new CartDAO();
 
-        if (!found) {
-            ProductDAO dao = new ProductDAO();
-            Product product = dao.getProductById(productId);
-            cart.add(new CartItem(product, 1));
+        switch (action) {
+            case "add":
+                cartDAO.addToCart(cart, productId);
+                response.sendRedirect("cart.jsp");
+                break;
+
+            case "buy":
+                cartDAO.addToCart(cart, productId);
+                response.sendRedirect("checkout.jsp"); // placeholder page
+                break;
+
+            case "remove":
+                cartDAO.removeFromCart(cart, productId);
+                response.sendRedirect("cart.jsp");
+                break;
+
+            case "clear":
+                cartDAO.clearCart(cart);
+                response.sendRedirect("cart.jsp");
+                break;
+
+            default:
+                response.sendRedirect("productsPageUser.jsp");
+                break;
         }
 
         session.setAttribute("cart", cart);
-        response.sendRedirect("cart.jsp");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doPost(request, response);
     }
 }

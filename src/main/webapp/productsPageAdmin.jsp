@@ -4,8 +4,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-<head><title>Admin Product Panel</title></head>
+<head>
+<link rel="stylesheet" href="styles/mainCss.css">
+<title>Admin Product Panel</title></head>
 <body>
+ <%@ include file="header.jsp" %>
     <h1>Admin: Manage Products</h1>
     <a href="addProduct.jsp">Add New Product</a>
     <hr>
@@ -21,6 +24,9 @@
             <a href="editProduct.jsp?id=<%= p.getProductID() %>">Edit</a> |
             <a href="deleteProduct?id=<%= p.getProductID() %>">Delete</a>
         </div>
-    <% } %>
+    <%
+    } 
+    %>
+    <%@ include file="footer.jsp" %>
 </body>
 </html>
