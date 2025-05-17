@@ -1,0 +1,125 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #cffecc;
+    margin: 0;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 40px;
+    min-height: 100vh;
+    background-color: #bafcb7;
+}
+
+.dashboard-container {
+    color: #1b8a1b;
+    background: #ffffff;
+    padding: 35px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 128, 0, 0.05);
+}
+
+.dashboard-container h2 {
+    text-align: center;
+    color: green;
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.add-user-btn {
+    display: inline-block;
+    margin-bottom: 25px;
+    padding: 12px 28px;
+    background-color: #4fd15c;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.add-user-btn:hover {
+    background-color: #3bb64b;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f7fff7;
+}
+
+.user-table thead {
+    background-color: #a7f3a7;
+}
+
+.user-table th {
+    padding: 16px 12px;
+    font-weight: 700;
+    color: #156c15;
+    text-align: left;
+    font-size: 15px;
+    border-bottom: 2px solid #7bd47b;
+}
+
+.user-table td {
+    padding: 14px 12px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #c9f1c9;
+}
+
+.user-table tr:hover {
+    background-color: #dbffdb;
+    transition: 0.3s ease;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 9px 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-right: 6px;
+    font-weight: 600;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+    background-color: #42c764;
+    color: #ffffff;
+}
+
+.edit-btn:hover {
+    background-color: #2bb24e;
+}
+
+.delete-btn {
+    background-color: #f17a7a;
+    color: #ffffff;
+    border: none;
+}
+
+.delete-btn:hover {
+    background-color: #db4f4f;
+}
+
+.no-users {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px dashed #94df94;
+    border-radius: 8px;
+    margin-top: 30px;
+}

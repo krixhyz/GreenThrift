@@ -105,7 +105,7 @@
         <label>Email</label>
         <input type="email" name="email" value="<%= user.getEmail() %>" required />
 
-        <label>New Password (optional)</label>
+        <label>New Password </label>
         <input type="password" name="password" placeholder="Leave blank to keep current" />
 
         <label>Role</label>
