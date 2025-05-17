@@ -294,4 +294,31 @@ public class UserDAO {
 
         return users;
     }
+    public User getUserById(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
+                user.setFirstname(rs.getString("first_name"));
+                user.setLastname(rs.getString("last_name"));
+                user.setPhone(rs.getString("phone_number"));
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

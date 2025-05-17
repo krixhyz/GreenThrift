@@ -13,13 +13,27 @@ import java.util.List;
 public class ManageUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         UserDAO userDAO = new UserDAO();
-        List<User> userList = userDAO.getAllUsers();
+        String idParam = request.getParameter("id");
 
-        // DEBUG
-        System.out.println("Fetched users: " + (userList != null ? userList.size() : "null"));
+        if (idParam != null && !idParam.isEmpty()) {
+            try {
+                int id = Integer.parseInt(idParam);
+                User user = userDAO.getUserById(id);
+                request.setAttribute("user", user);
+                request.getRequestDispatcher("userDetails.jsp").forward(request, response);
+            } catch (NumberFormatException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID");
+            }
+        } else {
+            List<User> userList = userDAO.getAllUsers();
 
-        request.setAttribute("userList", userList);
-        request.getRequestDispatcher("manageUser.jsp").forward(request, response);
+            // DEBUG
+            System.out.println("Fetched users: " + (userList != null ? userList.size() : "null"));
+
+            request.setAttribute("userList", userList);
+            request.getRequestDispatcher("manageUser.jsp").forward(request, response);
+        }
     }
 }
