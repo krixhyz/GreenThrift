@@ -96,6 +96,10 @@
                 }
             %>
         </table>
+
+        <h2>Manage Inquiries</h2>
+        <a href="contactData.jsp">View Contact Submissions</a>
     </div>
 </body>
 </html>
+
