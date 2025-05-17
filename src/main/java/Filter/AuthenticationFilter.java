@@ -7,31 +7,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/adminDashboard.jsp", "/userDashboard.jsp"})
+@WebFilter(urlPatterns = {"/adminDashboard.jsp", "/userDashboard.jsp", "/productsPageAdmin.jsp", "/manageUser.jsp"})
 public class AuthenticationFilter implements Filter {
+    private static final int MAX_INACTIVE_INTERVAL = 30 * 60; // 30 minutes
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-
-        HttpSession session = req.getSession(false); // don't create a new session
+        HttpSession session = req.getSession(false);
 
         if (session != null && session.getAttribute("user") != null) {
-            // User is logged in
+            session.setMaxInactiveInterval(MAX_INACTIVE_INTERVAL);
             chain.doFilter(request, response);
         } else {
-            // User not logged in - redirect to login
             res.sendRedirect("login.jsp");
         }
-
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
     @Override
     public void destroy() {}
-    
 }
+
