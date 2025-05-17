@@ -1,48 +1,23 @@
+INSERT INTO category (CategoryID, Name, Description) VALUES
+(1, 'Clothes', 'Second-hand and vintage clothing items'),
+(2, 'Accessories', 'Jewelry, bags, and other fashion accessories');
 
--- Seed data for User table
-INSERT INTO `User` (FirstName, LastName, Email, PhoneNumber, UserName, Password, Role) VALUES
-('Sita', 'Thapa', 'sita.thapa@gmail.com', '9800000001', 'sitathapa', 'pass123', 'customer'),
-('Ram', 'Shrestha', 'ram.shrestha@gmail.com', '9800000002', 'ramshrestha', 'pass456', 'customer'),
-('Kiran', 'Basnet', 'kiran.basnet@gmail.com', '9800000003', 'kiranb', 'admin'),
-('Laxmi', 'Gurung', 'laxmi.gurung@gmail.com', '9800000004', 'laxmig', 'admin');
 
--- Seed data for Category table
-INSERT INTO Category (Name, Description) VALUES
-('Men's Wear', 'Second-hand clothing for men'),
-('Women's Wear', 'Used fashion clothing for women'),
-('Winter Wear', 'Pre-owned jackets, sweaters and coats'),
-('Ethnic Wear', 'Traditional Nepali dresses and sets');
 
--- Seed data for Products table
-INSERT INTO Products (Name, Description, Price, Stock, DateAdded, UserID, CategoryID) VALUES
-('Vintage Denim Jacket', 'Men's classic denim jacket in good condition', 1500.00, 10, '2025-05-01', 3, 3),
-('Embroidered Kurti', 'Beautiful kurti with traditional embroidery', 1200.00, 15, '2025-05-01', 4, 4),
-('Woolen Sweater', 'Thick woolen sweater for winter', 1000.00, 20, '2025-05-01', 3, 3),
-('Women's Saree Set', 'Traditional Nepali saree with blouse', 2000.00, 5, '2025-05-01', 4, 4),
-('Men's Formal Shirt', 'Used but clean white formal shirt', 700.00, 8, '2025-05-01', 3, 1);
 
--- Seed data for Cart table
-INSERT INTO Cart (UserID) VALUES
-(1), (2);
+INSERT INTO products (Name, Description, Price, Stock, DateAdded, CategoryID, AdminID)
+VALUES 
+-- Clothes
+('Vintage Kurta Set', 'Lightly used cotton kurta with dupatta, size M', 1200.00, 5, CURDATE(), 1, 10),
+('Denim Jacket', 'Pre-loved Levi’s denim jacket, unisex, size L', 2500.00, 3, CURDATE(), 1, 10),
+('Woolen Sweater', 'Wool sweater from Pokhara, size M, excellent condition', 1500.00, 4, CURDATE(), 1, 10),
+('Tibetan Style Coat', 'Heavy winter coat with Tibetan patterns, size L', 3200.00, 2, CURDATE(), 1, 10),
+('Saree Collection', 'Vintage silk saree with embroidered border', 2200.00, 3, CURDATE(), 1, 10),
+('Boho Skirt', 'Colorful cotton skirt, free size', 900.00, 5, CURDATE(), 1, 10),
 
--- Seed data for Cart_items table
-INSERT INTO Cart_items (CartID, ProductID, Quantity) VALUES
-(1, 1, 1),
-(1, 2, 2),
-(2, 5, 1);
-
--- Seed data for Order table
-INSERT INTO `Order` (UserID, OrderDate, TotalAmount, Status) VALUES
-(1, '2025-05-02', 3900.00, 'Processing'),
-(2, '2025-05-02', 700.00, 'Delivered');
-
--- Seed data for Order_items table
-INSERT INTO Order_items (OrderID, ProductID, Quantity, PriceAtPurchase) VALUES
-(1, 1, 1, 1500.00),
-(1, 2, 2, 1200.00),
-(2, 5, 1, 700.00);
-
--- Seed data for Payment table
-INSERT INTO Payment (OrderID, PaymentDate, AmountPaid, PaymentMethod, PaymentStatus) VALUES
-(1, '2025-05-02', 3900.00, 'Esewa', 'Paid'),
-(2, '2025-05-02', 700.00, 'Cash on Delivery', 'Paid');
+-- Accessories
+('Leather Sling Bag', 'Brown leather sling bag, imported, gently used', 1800.00, 2, CURDATE(), 2, 10),
+('Silver Earrings', 'Traditional Newari style silver earrings', 950.00, 6, CURDATE(), 2, 10),
+('Woolen Cap', 'Hand-knitted wool cap, various colors', 400.00, 8, CURDATE(), 2, 10),
+('Beaded Necklace', 'Colorful beaded necklace from Thamel artisans', 650.00, 5, CURDATE(), 2, 10),
+('Embroidered Shawl', 'Warm shawl with Nepali embroidery, cotton blend', 1250.00, 3, CURDATE(), 2, 10);

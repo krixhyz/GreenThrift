@@ -253,29 +253,72 @@ public class UserDAO {
     }
 
 
+
+    public boolean updateUserProfile(User user) {
+        String sql = "UPDATE users SET email = ?, password = ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, user.getEmail());
+            stmt.setString(2, user.getPassword()); // hashed
+            stmt.setInt(3, user.getId());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users";
 
         try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
-                user.setFirstname(rs.getString("firstname"));
-                user.setLastname(rs.getString("lastname"));
                 user.setUsername(rs.getString("username"));
                 user.setEmail(rs.getString("email"));
-                user.setPhone(rs.getString("phone"));
                 user.setRole(rs.getString("role"));
+                // Set other fields if needed
                 users.add(user);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return users;
     }
+    public User getUserById(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setRole(rs.getString("role"));
+                user.setFirstname(rs.getString("first_name"));
+                user.setLastname(rs.getString("last_name"));
+                user.setPhone(rs.getString("phone_number"));
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

@@ -166,7 +166,7 @@
             <div class="hero-content">
                 <h1>Shop Pre-Loved Fashion</h1>
                 <p>Discover quality secondhand clothing at Green Thrifts.</p>
-                <a href="productPageUser.jsp#new-arrivals" class="btn primary">Browse</a>
+                <a href="productsPageUser.jsp#new-arrivals" class="btn primary">Browse</a>
             </div>
         </section>
 
@@ -182,7 +182,7 @@
                 </div>
                 <!-- Repeat for other cards... -->
             </div>
-            <a href="productPageUser.jsp#new-arrivals" class="btn primary">Browse All</a>
+            <a href="productsPageUser.jsp#new-arrivals" class="btn primary">Browse All</a>
         </section>
 
         <!-- Women's Clothing Section -->
@@ -197,7 +197,7 @@
                 </div>
                 <!-- Repeat for other cards... -->
             </div>
-            <a href="productPageUser.jsp#women" class="btn primary">Browse All</a>
+            <a href="productsPageUser.jsp#women" class="btn primary">Browse All</a>
         </section>
 
         <!-- Men's Clothing Section -->
@@ -212,7 +212,7 @@
                 </div>
                 <!-- Repeat for other cards... -->
             </div>
-            <a href="productPageUser.jsp#men" class="btn primary">Browse All</a>
+            <a href="productsPageUser.jsp#men" class="btn primary">Browse All</a>
         </section>
 
         <!-- Accessories Section -->
