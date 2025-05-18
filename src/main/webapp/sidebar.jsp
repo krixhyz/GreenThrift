@@ -332,29 +332,16 @@
  --%>
  
  
-
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    String pageParam = request.getParameter("page");
-    if (pageParam == null) {
-        response.sendRedirect(request.getContextPath() + "/admin/dashboard");
-        return;
-    }
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ page import="javax.servlet.http.HttpSession" %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            font-family: Arial, sans-serif;
-        }
-
+        /* Sidebar Styling */
         .sidebar {
             width: 250px;
             height: 100vh;
@@ -364,12 +351,15 @@
             position: fixed;
             top: 0;
             left: 0;
+            transition: left 0.3s;
             overflow-y: auto;
         }
 
         .sidebar h2 {
+            color: white;
             text-align: center;
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .sidebar a {
@@ -386,10 +376,18 @@
             background-color: #27ae60;
         }
 
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-            width: calc(100% - 250px);
+        .sidebar .logout {
+            margin-top: auto;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .sidebar .logout:hover {
+            background-color: #27ae60;
         }
     </style>
 </head>
@@ -399,39 +397,12 @@
 <div class="sidebar">
     <h2>green thrift</h2>
     <a href="${pageContext.request.contextPath}/admin/dashboard">Home</a>
-    <a href="sidebar.jsp?page=categories">Categories</a>
-    <a href="sidebar.jsp?page=addCategories">Add Categories</a>
-    <a href="sidebar.jsp?page=viewProducts">View Products</a>
-    <a href="sidebar.jsp?page=users">Users</a>
-    <a href="sidebar.jsp?page=orders">Orders</a>
-    <a href="#">Logout</a>
-</div>
-
-<!-- Main Content -->
-<div class="main-content">
-    <c:choose>
-        <c:when test="${param.page == 'dashboard'}">
-            <jsp:include page="adminDashboard.jsp"/>
-        </c:when>
-        <c:when test="${param.page == 'categories'}">
-            <jsp:include page="categories.jsp"/>
-        </c:when>
-        <c:when test="${param.page == 'addCategories'}">
-            <jsp:include page="addCategories.jsp"/>
-        </c:when>
-        <c:when test="${param.page == 'viewProducts'}">
-            <jsp:include page="viewProducts.jsp"/>
-        </c:when>
-        <c:when test="${param.page == 'users'}">
-            <jsp:include page="users.jsp"/>
-        </c:when>
-        <c:when test="${param.page == 'orders'}">
-            <jsp:include page="orders.jsp"/>
-        </c:when>
-        <c:otherwise>
-            <jsp:include page="adminDashboard.jsp"/>
-        </c:otherwise>
-    </c:choose>
+    <a href="#">Categories</a>
+    <a href="#">Add Categories</a>
+    <a href="#">View Products</a>
+    <a href="#">Users</a>
+    <a href="#">Orders</a>
+    <button class="logout">Logout</button>
 </div>
 
 </body>

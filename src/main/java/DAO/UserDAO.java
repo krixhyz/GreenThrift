@@ -283,7 +283,6 @@
 
 
 
-
 package DAO;
 
 import Model.User;
@@ -501,6 +500,18 @@ public class UserDAO {
         }
 
         return users;
+    }
+    
+    public static int getUserCount() {
+        int count = 0;
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM users");
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) count = rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 }
