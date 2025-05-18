@@ -14,9 +14,12 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String query = request.getParameter("query");
+        String role = request.getParameter("role");
+
         if (query == null || query.trim().isEmpty()) {
-            response.sendRedirect("productPageUser.jsp"); // fallback
+            response.sendRedirect("homepage.jsp");
             return;
         }
 
@@ -25,7 +28,8 @@ public class SearchServlet extends HttpServlet {
 
         request.setAttribute("results", results);
         request.setAttribute("query", query);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("searchResults.jsp");
-        dispatcher.forward(request, response);
+        request.setAttribute("isAdmin", "admin".equals(role));
+
+        request.getRequestDispatcher("searchResults.jsp").forward(request, response);
     }
 }

@@ -1,0 +1,95 @@
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #d0f0d9; 
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-container {
+    background: #a3d9a5; 
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.dashboard-container h2 {
+    text-align: center;
+    color: black;
+    font-weight: 700;
+    margin-bottom: 35px;
+    font-size: 2rem;
+}
+
+form.editUserForm {
+    display: flex;
+    flex-direction: column;
+}
+
+form.editUserForm label {
+    margin-top: 15px;
+    font-weight: 600;
+    color: #1b3a1a;
+    user-select: none;
+}
+
+form.editUserForm input[type="text"],
+form.editUserForm input[type="email"],
+form.editUserForm input[type="password"] {
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1.5px solid #88bb88;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+form.editUserForm input[type="text"]:focus,
+form.editUserForm input[type="email"]:focus,
+form.editUserForm input[type="password"]:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 6px #4caf5080;
+}
+
+form.editUserForm input[readonly] {
+    background-color: #d9ead3;
+    color: #4a6b4a;
+    cursor: not-allowed;
+}
+
+form.editUserForm button {
+    margin-top: 30px;
+    padding: 14px 0;
+    background-color: #2ecc71;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form.editUserForm button:hover {
+    background-color: #27ae60;
+}
+
+
+.message {
+    margin-top: 20px;
+    padding: 12px 15px;
+    background-color: #d1ffd6;
+    color: #2e7d32;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(46, 125, 50, 0.3);
+}
