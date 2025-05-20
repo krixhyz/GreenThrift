@@ -93,3 +93,15 @@ form.editUserForm button:hover {
     text-align: center;
     box-shadow: 0 2px 6px rgba(46, 125, 50, 0.3);
 }
+
+form.editUserForm select {
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1.5px solid #88bb88;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+    background-color: white;
+}
+
+

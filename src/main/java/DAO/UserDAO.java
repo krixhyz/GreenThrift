@@ -294,21 +294,23 @@ import java.util.List;
 
 public class UserDAO {
 
-    // Create a new user in the database
+    // Create a new user
     public boolean createUser(User user) {
-        String sql = "INSERT INTO users (first_name, last_name, username, password, email, phone_number, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (first_name, last_name, username, password, email, phone_number, role, address, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, user.getFirstname());
-            stmt.setString(2, user.getLastname());
-            stmt.setString(3, user.getUsername());
-            stmt.setString(4, user.getPassword());
-            stmt.setString(5, user.getEmail());
-            stmt.setString(6, user.getPhone());
-            stmt.setString(7, user.getRole());
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getUsername());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(6, user.getPhone());
+            preparedStatement.setString(7, user.getRole());
+            preparedStatement.setString(8, user.getAddress());
+            preparedStatement.setString(9, user.getGender());
 
-            return stmt.executeUpdate() > 0;
+            return preparedStatement.executeUpdate() > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -316,14 +318,15 @@ public class UserDAO {
         }
     }
 
-    // Check if username already exists to avoid duplicates
+    // Check if a username already exists
     public boolean usernameExists(String username) {
         String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
+
             return rs.next() && rs.getInt(1) > 0;
 
         } catch (SQLException e) {
@@ -332,18 +335,17 @@ public class UserDAO {
         }
     }
 
-    // Fetch user details by username
+    // Get a user by username
     public User getUserByUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
+            preparedStatement.setString(1, username);
+            ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                User user = extractUserFromResultSet(rs);
-                return user;
+                return extractUserFromResultSet(rs);
             }
 
         } catch (SQLException e) {
@@ -352,51 +354,126 @@ public class UserDAO {
         return null;
     }
 
-    // Update user email and role based on id
-    public boolean updateUser(User user) {
-        boolean rowUpdated = false;
-        String sql = "UPDATE users SET first_name=?, last_name=?, username=?, email=?, password=?, phone_number=?, role=? WHERE id=?";
+    // Get user by ID
+    public User getUserById(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-        	stmt.setString(1, user.getFirstname());
-        	stmt.setString(2, user.getLastname());
-        	stmt.setString(3, user.getUsername());
-        	stmt.setString(4, user.getEmail());
-        	stmt.setString(5, user.getPassword());
-        	stmt.setString(6, user.getPhone());
-        	stmt.setString(7, user.getRole());
-        	stmt.setInt(8, user.getId());
-        	rowUpdated = stmt.executeUpdate() > 0;
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                return extractUserFromResultSet(rs);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return rowUpdated;
+        return null;
+    }
+
+    public boolean updateUser(User user) {
+    	
+    	 System.out.println("Updating user with ID: " + user.getId());
+    	 System.out.println("Email: " + user.getEmail());
+    	 System.out.println("First Name: " + user.getFirstname());
+    	 System.out.println("Last Name: " + user.getLastname());
+         System.out.println("Phone: " + user.getPhone());
+         System.out.println("Gender: " + user.getGender());
+   	     System.out.println("Address: " + user.getAddress());
+    	
+    	
+   	    String sql = "UPDATE users SET email = ?, first_name = ?, last_name = ?, phone_number=? , gender = ?, address = ? WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setString(1, user.getEmail());
+            stmt.setString(2, user.getFirstname());
+            stmt.setString(3, user.getLastname());
+            stmt.setString(4, user.getPhone());
+            stmt.setString(5, user.getGender());
+            stmt.setString(6, user.getAddress());
+            stmt.setInt(7, user.getId());
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+ // Update full profile info
+    public boolean updateUserProfile(User user) {
+        String sql = "UPDATE users SET first_name=?, last_name=?, email=?, phone_number=?, gender=?, address=? WHERE id=?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, user.getFirstname());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPhone());
+            preparedStatement.setString(5, user.getGender());
+            preparedStatement.setString(6, user.getAddress());
+            preparedStatement.setInt(7, user.getId());
+
+            return preparedStatement.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
-    // Delete a user by id
+    // Delete a user
     public boolean deleteUser(int id) {
-        boolean rowDeleted = false;
         String sql = "DELETE FROM users WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            rowDeleted = stmt.executeUpdate() > 0;
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+            return preparedStatement.executeUpdate() > 0;
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return rowDeleted;
     }
-    
-    
-    // Get list of all normal users (role = 'user')
+
+    // Get all users (any role)
+    public List<User> getAllUsers() {
+        List<User> list = new ArrayList<>();
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "SELECT * FROM users"; // use your table name
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setFirstname(rs.getString("firstname"));
+                user.setLastname(rs.getString("lastname"));
+                user.setPhone(rs.getString("phone"));
+                user.setGender(rs.getString("gender"));
+                user.setAddress(rs.getString("address"));
+                list.add(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    // Get all users with role = 'user'
     public List<User> getAllNormalUsers() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users WHERE role = 'user'"; 
+        String sql = "SELECT * FROM users WHERE role = 'user'";
 
         try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             PreparedStatement preparedStatement = conn.prepareStatement(sql);
+             ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
                 User user = new User();
@@ -406,59 +483,35 @@ public class UserDAO {
                 user.setRole(rs.getString("role"));
                 users.add(user);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return users;
     }
-    
-    
-    public boolean updateUserProfile(User user) {
-        String sql = "UPDATE users SET email = ?, password = ? WHERE id = ?";
+
+    // Get total number of users
+    public static int getUserCount() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM users";
+
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = conn.prepareStatement(sql);
+             ResultSet rs = preparedStatement.executeQuery()) {
 
-            stmt.setString(1, user.getEmail());
-            stmt.setString(2, user.getPassword()); // hashed
-            stmt.setInt(3, user.getId());
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
 
-            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Get user details by user id
-    public User getUserById(int id) {
-        User user = null;
-        String sql = "SELECT * FROM users WHERE id = ?";
-
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setInt(1, id);
-
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setFirstname(rs.getString("first_name"));
-                user.setLastname(rs.getString("last_name"));
-                user.setPhone(rs.getString("phone_number"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
-        return user;
+        return count;
     }
 
-    // Helper method to reduce repeated code when extracting User object from ResultSet
+    // Extract a User object from a ResultSet (reusable helper)
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
@@ -469,49 +522,8 @@ public class UserDAO {
         user.setEmail(rs.getString("email"));
         user.setPhone(rs.getString("phone_number"));
         user.setRole(rs.getString("role"));
+        user.setAddress(rs.getString("address"));
+        user.setGender(rs.getString("gender"));
         return user;
     }
-    
-    
-
-    
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setFirstname(rs.getString("first_name"));
-                user.setLastname(rs.getString("last_name"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                user.setPhone(rs.getString("phone_number"));
-                user.setRole(rs.getString("role"));
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return users;
-    }
-    
-    public static int getUserCount() {
-        int count = 0;
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM users");
-             ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) count = rs.getInt(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
-
 }
