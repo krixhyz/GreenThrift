@@ -210,6 +210,29 @@ public class ProductDAO {
         }
         return count;
     }
-    
+    //this code gets the products by category.
+    public List<Product> getProductsByCategory(int categoryId) {
+        List<Product> products = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM products WHERE CategoryID = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, categoryId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductID(rs.getInt("ProductID"));
+                p.setName(rs.getString("Name"));
+                p.setDescription(rs.getString("Description"));
+                p.setPrice(rs.getDouble("Price"));
+                p.setStock(rs.getInt("Stock"));
+                p.setCategoryID(rs.getInt("CategoryID"));
+                p.setImageUrl(rs.getString("image_url"));
+                products.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
     
 }
