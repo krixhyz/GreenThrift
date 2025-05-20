@@ -103,4 +103,9 @@ public class Product {
     public void setAdminID(int adminID) {
         this.adminID = adminID;
     }
+
+	public void setImageUrl(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }
