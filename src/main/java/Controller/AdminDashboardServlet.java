@@ -76,8 +76,14 @@ public class AdminDashboardServlet extends HttpServlet {
             session.setAttribute("adminName", "Admin");
         }
 
-        // Forward to JSP
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/sidebar.jsp?page=dashboard");
+		/*
+		 * // Forward to JSP RequestDispatcher dispatcher =
+		 * request.getRequestDispatcher("/sidebar.jsp?page=dashboard");
+		 * dispatcher.forward(request, response);
+		 */
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/sidebar.jsp");
+        request.setAttribute("contentPage", "adminDashboard.jsp"); // Add this line
         dispatcher.forward(request, response);
+
     }
 }
