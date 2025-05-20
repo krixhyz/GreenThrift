@@ -444,28 +444,24 @@ public class UserDAO {
 
     // Get all users (any role)
     public List<User> getAllUsers() {
-        List<User> list = new ArrayList<>();
-        try {
-            Connection con = DBConnection.getConnection();
-            String sql = "SELECT * FROM users"; // use your table name
-            PreparedStatement stmt = con.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql);
+             ResultSet rs = preparedStatement.executeQuery()) {
+
             while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setEmail(rs.getString("email"));
-                user.setFirstname(rs.getString("firstname"));
-                user.setLastname(rs.getString("lastname"));
-                user.setPhone(rs.getString("phone"));
-                user.setGender(rs.getString("gender"));
-                user.setAddress(rs.getString("address"));
-                list.add(user);
+                users.add(extractUserFromResultSet(rs));
             }
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+
+        return users;
     }
+
     // Get all users with role = 'user'
     public List<User> getAllNormalUsers() {
         List<User> users = new ArrayList<>();

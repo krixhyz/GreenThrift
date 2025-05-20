@@ -397,8 +397,8 @@
 <div class="sidebar">
     <h2>green thrift</h2>
     <a href="${pageContext.request.contextPath}/admin/dashboard">Home</a>
-    <a href="#">Categories</a>
-    <a href="#">Add Categories</a>
+    <!-- <a href="#">Categories</a>
+    <a href="#">Add Categories</a> -->
     <a href="#">View Products</a>
     <a href="#">Users</a>
     <a href="#">Orders</a>
