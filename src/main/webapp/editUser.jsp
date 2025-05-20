@@ -31,11 +31,15 @@
             <label>Email</label>
             <input type="email" name="email" value="<%= user.getEmail() %>" required />
 
-            <label>New Password</label>
-            <input type="password" name="password" placeholder="Leave blank to keep current password" />
-
-            <label>Role</label>
-            <input type="text" name="role" value="<%= user.getRole() %>" required />
+            <label for="gender">Gender:</label>
+			<select name="gender" id="gender" required>
+			    <option value="Male" <%= "Male".equals(user.getGender()) ? "selected" : "" %>>Male</option>
+			    <option value="Female" <%= "Female".equals(user.getGender()) ? "selected" : "" %>>Female</option>
+			    <option value="Other" <%= "Other".equals(user.getGender()) ? "selected" : "" %>>Other</option>
+			</select>
+			
+			<label for="address">Address:</label>
+			<input type="text" id="address" name="address" value="<%= user.getAddress() %>" required />
 
             <label>First Name</label>
             <input type="text" name="firstname" value="<%= user.getFirstname() %>" required />
