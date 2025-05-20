@@ -331,37 +331,55 @@
 
  --%>
  
+
  
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ page import="javax.servlet.http.HttpSession" %>
+    
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    if (request.getAttribute("contentPage") == null) {
+        request.setAttribute("contentPage", "/admin/dashboard");
+    }
+%>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <title>Admin Panel</title>
     <style>
-        /* Sidebar Styling */
-        .sidebar {
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+       /*  .sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #2ecc71;
+            background-color:  #2c3e50; 
             color: white;
             padding: 20px;
             position: fixed;
             top: 0;
             left: 0;
-            transition: left 0.3s;
             overflow-y: auto;
-        }
-
+        } */
+        .sidebar {
+    		position: fixed;
+    		left: 0;
+    		top: 0;
+    		width: 220px;
+    		height: 100%;
+    		background-color: #2c3e50;
+    		color: #ecf0f1;
+    		padding-top: 20px;
+		}
+        
         .sidebar h2 {
-            color: white;
             text-align: center;
             margin-bottom: 20px;
-            font-size: 24px;
         }
-
         .sidebar a {
             display: block;
             color: white;
@@ -371,23 +389,13 @@
             border-radius: 5px;
             transition: background-color 0.3s;
         }
-
         .sidebar a:hover {
-            background-color: #27ae60;
+            background-color: #0056b3; /* Darker blue on hover */
         }
-
-        .sidebar .logout {
-            margin-top: auto;
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        .sidebar .logout:hover {
-            background-color: #27ae60;
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
         }
     </style>
 </head>
@@ -395,15 +403,112 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <h2>green thrift</h2>
+    <h2>Green Thrift</h2>
     <a href="${pageContext.request.contextPath}/admin/dashboard">Home</a>
-    <a href="#">Categories</a>
-    <a href="#">Add Categories</a>
-    <a href="#">View Products</a>
-    <a href="#">Users</a>
-    <a href="#">Orders</a>
-    <button class="logout">Logout</button>
+    <a href="${pageContext.request.contextPath}/admin/categories">Categories</a>
+    <a href="${pageContext.request.contextPath}/admin/addCategory">Add Categories</a>
+    <a href="${pageContext.request.contextPath}/admin/products">View Products</a>
+    <a href="${pageContext.request.contextPath}/admin/users">Users</a>
+    <a href="${pageContext.request.contextPath}/admin/orders">Orders</a>
+    <a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <c:if test="${not empty contentPage}">
+        <jsp:include page="${contentPage}" />
+    </c:if>
+</div>
+
+</body>
+</html> --%>
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    if (request.getAttribute("contentPage") == null) {
+        request.setAttribute("contentPage", "/admin/dashboard");
+    }
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 220px;
+            height: 100%;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+            width: calc(100% - 220px);
+        }
+
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Green Thrift</h2>
+    <a href="${pageContext.request.contextPath}/admin/dashboard">Home</a>
+    <a href="${pageContext.request.contextPath}/admin/categories">Categories</a>
+    <a href="${pageContext.request.contextPath}/admin/categories?action=add">Add Category</a>
+    <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp">View Products</a>
+    <a href="${pageContext.request.contextPath}/ManageUserServlet.jsp">Users</a>
+    <a href="${pageContext.request.contextPath}/admin/orders">Orders</a>
+    <a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <c:if test="${not empty contentPage}">
+        <jsp:include page="${contentPage}" />
+    </c:if>
 </div>
 
 </body>
 </html>
+
+    

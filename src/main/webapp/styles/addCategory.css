@@ -1,0 +1,137 @@
+/* @charset "UTF-8";
+
+ 
+Background for the entire page
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa; light cyan background
+}
+
+.h2{
+	text-align: center;
+}
+
+Container to center content
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+Form styling
+form {
+    background-color: #ffffff; white background for the form
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+Form elements
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+
+input[type="submit"] {
+    background-color: #00796b;
+    color: white;
+    padding: 14px 24px;       Increased padding
+    font-size: 16px;          Larger font
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;              Full width button
+}
+
+input[type="submit"]:hover {
+    background-color: #004d40;
+}
+
+  */
+  
+  
+@charset "UTF-8";
+
+/* Background for the entire page */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa; /* light cyan background */
+}
+
+.h2 {
+    text-align: center;
+}
+
+/* Container to center content */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Form styling */
+form {
+    background-color: #ffffff; /* white background for the form */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Form elements */
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Submit button */
+input[type="submit"] {
+    background-color: #00796b;
+    color: white;
+    padding: 14px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #004d40;
+}
+
+/* Success message container */
+.message-box {
+    background-color: #d1ecf1;       /* Light blue background */
+    border: 1px solid #bee5eb;       /* Slightly darker blue border */
+    color: #0c5460;                  /* Dark blue text */
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 15px 0 20px 0;           /* margin top & bottom to separate from heading & inputs */
+    font-weight: bold;
+    text-align: center;
+}
+  
