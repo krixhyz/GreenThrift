@@ -437,62 +437,53 @@
 <html>
 <head>
     <title>Admin Panel</title>
-    <!-- Lucide Icon CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f4f6f8;
         }
 
         .sidebar {
             position: fixed;
-            top: 0;
             left: 0;
-            width: 240px;
+            top: 0;
+            width: 220px;
             height: 100%;
-            background-color: #1e272e;
+            background-color: #2c3e50;
             color: #ecf0f1;
-            padding-top: 30px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding-top: 20px;
         }
 
         .sidebar h2 {
             text-align: center;
-            font-size: 22px;
-            margin-bottom: 30px;
-            color: #00cec9;
+            margin-bottom: 20px;
         }
 
         .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #dfe6e9;
+            display: block;
+            color: white;
             text-decoration: none;
-            padding: 12px 20px;
-            margin: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
         .sidebar a:hover {
             background-color: #34495e;
-            transform: scale(1.02);
-        }
-
-        .sidebar a i {
-            width: 20px;
-            height: 20px;
         }
 
         .main-content {
-            margin-left: 240px;
-            padding: 25px;
-            width: calc(100% - 240px);
+            margin-left: 220px;
+            padding: 20px;
+            width: calc(100% - 220px);
+        }
+
+        h1 {
+            color: #333;
         }
     </style>
 </head>
@@ -501,13 +492,13 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <h2>Green Thrift</h2>
-    <a href="${pageContext.request.contextPath}/admin/dashboard"><i data-lucide="home"></i>Home</a>
-    <a href="${pageContext.request.contextPath}/admin/categories"><i data-lucide="layers"></i>Categories</a>
-    <a href="${pageContext.request.contextPath}/admin/categories?action=add"><i data-lucide="plus-circle"></i>Add Category</a>
-    <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp"><i data-lucide="box"></i>View Products</a>
-    <a href="${pageContext.request.contextPath}/ManageUserServlet"><i data-lucide="users"></i>Users</a>
-    <a href="${pageContext.request.contextPath}/admin/orders"><i data-lucide="shopping-cart"></i>Orders</a>
-    <a href="${pageContext.request.contextPath}/logout.jsp"><i data-lucide="log-out"></i>Logout</a>
+    <a href="${pageContext.request.contextPath}/admin/dashboard">Home</a>
+    <a href="${pageContext.request.contextPath}/admin/categories">Categories</a>
+    <a href="${pageContext.request.contextPath}/admin/categories?action=add">Add Category</a>
+    <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp">View Products</a>
+    <a href="${pageContext.request.contextPath}/manageUser.jsp">Users</a>
+    <a href="${pageContext.request.contextPath}/admin/orders">Orders</a>
+    <a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
 </div>
 
 <!-- Main Content -->
@@ -517,10 +508,7 @@
     </c:if>
 </div>
 
-<!-- Load Lucide Icons -->
-<script>
-    lucide.createIcons();
-</script>
-
 </body>
 </html>
+
+    
