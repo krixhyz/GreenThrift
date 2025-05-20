@@ -199,5 +199,17 @@ public class ProductDAO {
         }
     }
     
+    public static int getProductCount() {
+        int count = 0;
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM products");
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) count = rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    
     
 }

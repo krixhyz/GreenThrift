@@ -20,11 +20,15 @@ public class DBConnection {
     public static void main(String[] args) {
         try {
             Connection conn = getConnection();
-            System.out.println("✅ Connected to the database!");
+            System.out.println("Connected to the database!");
         } catch (SQLException e) {
-            System.out.println("❌ Failed to connect to the database.");
+            System.out.println("Failed to connect to the database.");
             e.printStackTrace();
         }
     }
 
 }
+  
+ 
+
+
