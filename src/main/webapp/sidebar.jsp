@@ -496,7 +496,7 @@
     <a href="${pageContext.request.contextPath}/admin/categories">Categories</a>
     <a href="${pageContext.request.contextPath}/admin/categories?action=add">Add Category</a>
     <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp">View Products</a>
-    <a href="${pageContext.request.contextPath}/ManageUserServlet.jsp">Users</a>
+    <a href="${pageContext.request.contextPath}/manageUser.jsp">Users</a>
     <a href="${pageContext.request.contextPath}/admin/orders">Orders</a>
     <a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
 </div>

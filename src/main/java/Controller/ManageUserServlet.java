@@ -113,7 +113,7 @@ public class ManageUserServlet extends HttpServlet {
         // Default: show all users
         List<User> users = userDAO.getAllUsers();
         request.setAttribute("userList", users);
-        request.getRequestDispatcher("manageUsers.jsp").forward(request, response);
+        request.getRequestDispatcher("manageUser.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

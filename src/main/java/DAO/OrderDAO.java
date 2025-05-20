@@ -12,7 +12,7 @@ public class OrderDAO {
     // Get total order count
     public static int getOrderCount() {
         int count = 0;
-        String sql = "SELECT COUNT(*) FROM 'order'";
+        String sql = "SELECT COUNT(*) FROM 'orders'";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -32,7 +32,7 @@ public class OrderDAO {
     // Get recent N orders
     public static List<Order> getRecentOrders(int limit) {
         List<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM order ORDER BY order_date DESC LIMIT ?";
+        String sql = "SELECT * FROM orders ORDER BY order_date DESC LIMIT ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
