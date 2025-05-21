@@ -492,13 +492,13 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <h2>Green Thrift</h2>
-    <a href="${pageContext.request.contextPath}/admin/dashboard">Home</a>
+  <a href="${pageContext.request.contextPath}/admin/dashboard">Home</a>
     <a href="${pageContext.request.contextPath}/admin/categories">Categories</a>
     <a href="${pageContext.request.contextPath}/admin/categories?action=add">Add Category</a>
     <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp">View Products</a>
     <a href="${pageContext.request.contextPath}/manageUser.jsp">Users</a>
     <a href="${pageContext.request.contextPath}/admin/orders">Orders</a>
-    <a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
+	<a href="${pageContext.request.contextPath}/logout">Logout</a>
 </div>
 
 <!-- Main Content -->
