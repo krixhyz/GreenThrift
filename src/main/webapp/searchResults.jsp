@@ -73,7 +73,7 @@
                  onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
         <% } else { %>
         
-        		<a href="productsDetailsPage.jsp?id=<%= product.getProductID() %>">View Details</a>
+		<a href="productsDetailsPage.jsp?productId=<%= product.getProductID() %>">View Details</a>
 
             <!-- Add to Cart form -->
             <form action="cart" method="post" style="display:inline; margin-left:10px;">
