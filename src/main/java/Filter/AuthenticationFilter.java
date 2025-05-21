@@ -1,50 +1,31 @@
-/*
- * package Filter;
- * 
- * import javax.servlet.*; import javax.servlet.annotation.WebFilter; import
- * javax.servlet.http.HttpServletRequest; import
- * javax.servlet.http.HttpServletResponse; import
- * javax.servlet.http.HttpSession; import java.io.IOException;
- * 
- * @WebFilter(urlPatterns = {"/adminDashboard.jsp", "/userDashboard.jsp",
- * "/productsPageAdmin.jsp", "/manageUser.jsp"}) public class
- * AuthenticationFilter implements Filter { private static final int
- * MAX_INACTIVE_INTERVAL = 30 * 60; // 30 minutes
- * 
- * @Override public void doFilter(ServletRequest request, ServletResponse
- * response, FilterChain chain) throws IOException, ServletException {
- * HttpServletRequest req = (HttpServletRequest) request; HttpServletResponse
- * res = (HttpServletResponse) response; HttpSession session =
- * req.getSession(false);
- * 
- * 
- * System.out.println("Session user: " + (session != null ?
- * session.getAttribute("user") : "null"));
- * 
- * if (session != null && session.getAttribute("user") != null) {
- * session.setMaxInactiveInterval(MAX_INACTIVE_INTERVAL);
- * chain.doFilter(request, response); } else { res.sendRedirect("login.jsp"); }
- * }
- * 
- * @Override public void init(FilterConfig filterConfig) throws ServletException
- * {}
- * 
- * @Override public void destroy() {} }
- * 
- */
 
 
 package Filter;
 
+import Model.User;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
-@WebFilter(urlPatterns = {"/adminDashboard.jsp", "/userDashboard.jsp", "/productsPageAdmin.jsp", "/manageUser.jsp"})
+@WebFilter("/*") // Apply filter to all URLs
 public class AuthenticationFilter implements Filter {
+
+    // Protected paths for regular users
+    private static final List<String> USER_PATHS = Arrays.asList(
+        "/homepage.jsp", "/productsPageUser.jsp", "/cart.jsp",
+        "/productDetails.jsp", "/userProfile.jsp",
+        "/user/dashboard", "/user/orders" // Servlet paths for users
+    );
+
+    // Protected paths for admins
+    private static final List<String> ADMIN_PATHS = Arrays.asList(
+        "/adminDashboard.jsp", "/productsPageAdmin.jsp", "/manageUser.jsp",
+        "/admin/dashboard", "/admin/categories", "/admin/orders" // Servlet paths for admins
+    );
 
     private static final int MAX_INACTIVE_INTERVAL = 30 * 60; // 30 minutes
 
@@ -54,32 +35,49 @@ public class AuthenticationFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        String path = req.getServletPath();
 
-        HttpSession session = req.getSession(false); // don't create new session
+        HttpSession session = req.getSession(false);
+        User user = (session != null) ? (User) session.getAttribute("user") : null;
 
-        // Check if user is logged in
-        if (session != null && session.getAttribute("user") != null) {
-            // Optional: Refresh session timeout
-            session.setMaxInactiveInterval(MAX_INACTIVE_INTERVAL);
+        // Debug logs
+        System.out.println("Requested path: " + path);
+        System.out.println("User role: " + (user != null ? user.getRole() : "none"));
 
-            // Proceed to requested resource
+        boolean isUserPath = USER_PATHS.contains(path);
+        boolean isAdminPath = ADMIN_PATHS.contains(path);
+
+        // Allow public pages
+        if (!isUserPath && !isAdminPath) {
             chain.doFilter(request, response);
-
-        } else {
-            // User not logged in, redirect to login page
-            // Use context path in case app is not deployed at root
-            String loginPage = req.getContextPath() + "/login.jsp";
-            res.sendRedirect(loginPage);
+            return;
         }
+
+        // Block if not logged in
+        if (user == null) {
+            res.sendRedirect(req.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        // Extend session timeout
+        session.setMaxInactiveInterval(MAX_INACTIVE_INTERVAL);
+
+        // Enforce role restrictions
+        if (isUserPath && !"user".equalsIgnoreCase(user.getRole())) {
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "User role required.");
+            return;
+        } else if (isAdminPath && !"admin".equalsIgnoreCase(user.getRole())) {
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Admin role required.");
+            return;
+        }
+
+        // All good — continue
+        chain.doFilter(request, response);
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // You can initialize resources here if needed
-    }
+    public void init(FilterConfig filterConfig) {}
 
     @Override
-    public void destroy() {
-        // Cleanup code if any when filter is destroyed
-    }
+    public void destroy() {}
 }
