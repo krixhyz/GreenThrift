@@ -1,4 +1,4 @@
-<%@ page import="Model.User" %>
+<%-- <%@ page import="Model.User" %>
 <%
     // Fetch current user and path
     String currentPage = request.getServletPath();
@@ -62,6 +62,72 @@
                 <% } %>
                 <!-- Common Logout for both admin and user -->
                 <a href="logout" class="btn logout" style="text-decoration: none;">Logout</a>
+            <% } %>
+        </div>
+    </div>
+</header>
+ --%>
+ 
+<%@ page import="Model.User" %>
+<%
+    // Fetch current user and path
+    String currentPage = request.getServletPath();
+    User user = (User) session.getAttribute("user");
+
+    // Role-based flag
+    boolean isAdmin = user != null && "admin".equalsIgnoreCase(user.getRole());
+
+    // Logo redirects to the appropriate homepage
+    String logoLink = isAdmin ? "productsPageAdmin.jsp" : "homepage.jsp";
+
+    // Show search bar on these pages
+    boolean showSearch = currentPage.endsWith("productsPageUser.jsp") || 
+                         currentPage.endsWith("productsPageAdmin.jsp");
+%>
+
+<header>
+    <div class="header-container">
+        <!-- Logo -->
+        <a href="<%= logoLink %>" class="logo"><i class="fas fa-leaf"></i> Green Thrifts</a>
+
+        <!-- Navigation Links -->
+        <nav>
+            <ul>
+                <% if (isAdmin) { %>
+                    <!-- Admin Navigation -->
+                    <li><a href="adminDashboard.jsp"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="productsPageAdmin.jsp"><i class="fas fa-box-open"></i> Manage Products</a></li>
+                    <li><a href="manageUser.jsp"><i class="fas fa-users"></i> Manage Users</a></li>
+                <% } else { %>
+                    <!-- User/Guest Navigation -->
+                    <li><a href="about.jsp"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="contact.jsp"><i class="fas fa-envelope"></i> Contact</a></li>
+                <% } %>
+            </ul>
+        </nav>
+
+        <!-- Search Bar -->
+        <% if (showSearch) { %>
+            <form action="search" method="get" class="search-form">
+                <input type="text" name="query" placeholder="Search products..." required />
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+            </form>
+        <% } %>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+            <% if (user == null) { %>
+                <!-- Not Logged In -->
+                <a href="login.jsp" class="btn login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="register.jsp" class="btn register"><i class="fas fa-user-plus"></i> Register</a>
+            <% } else { %>
+                <% if (!isAdmin) { %>
+                    <!-- Logged in User -->
+                    <a href="cart.jsp" class="btn cart"><i class="fas fa-shopping-cart"></i> Cart</a>
+                    <a href="userDashboard.jsp" class="btn profile"><i class="fas fa-user"></i> Profile</a>
+                <% } %>
+                <!-- Common Logout for both admin and user -->
+                <a href="logout" class="btn logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
             <% } %>
         </div>
     </div>
