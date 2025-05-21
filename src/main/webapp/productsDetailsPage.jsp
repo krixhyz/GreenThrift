@@ -20,8 +20,21 @@
 </html>
  --%>
  
-<%@ page import="Model.Product" %>
+<%@ page import="DAO.ProductDAO, Model.Product" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    int id = 0;
+    Product product = null;
+
+    try {
+        id = Integer.parseInt(request.getParameter("id"));
+        ProductDAO dao = new ProductDAO();
+        product = dao.getProductById(id);
+    } catch (Exception e) {
+        // handle bad id or DAO error
+    }
+%>
 
 <html>
 <head>
@@ -29,38 +42,42 @@
     <title>Product Details</title>
 </head>
 <body>
- <%@ include file="header.jsp" %>
-<%
-    Product product = (Product) request.getAttribute("product");
-    if (product != null) {
-%>
-    <h2><%= product.getName() %></h2>
-    <p><strong>Description:</strong> <%= product.getDescription() %></p>
-    <p><strong>Price:</strong> Rs. <%= product.getPrice() %></p>
-    <p><strong>Stock Available:</strong> <%= product.getStock() %></p>
-    <p><strong>Date Added:</strong> <%= product.getDateAdded() %></p>
+    <%@ include file="header.jsp" %>
 
-    <!-- Add to Cart form -->
-    <form action="cart" method="post" style="display:inline;">
-        <input type="hidden" name="productId" value="<%= product.getProductID() %>">
-        <input type="hidden" name="action" value="add">
-        <input type="submit" value="Add to Cart">
-    </form>
+    <%
+        if (product != null) {
+    %>
+        <h2><%= product.getName() %></h2>
+        <p><strong>Description:</strong> <%= product.getDescription() %></p>
+        <p><strong>Price:</strong> Rs. <%= product.getPrice() %></p>
+        <p><strong>Stock Available:</strong> <%= product.getStock() %></p>
+        <p><strong>Date Added:</strong> <%= product.getDateAdded() %></p>
 
-    <!-- Buy Now form -->
-    <form action="CheckoutServlet" method="post" style="display:inline; margin-left:10px;">
-        <input type="hidden" name="productId" value="<%= product.getProductID() %>">
-        <input type="hidden" name="action" value="buy">
-        <input type="submit" value="Buy Now">
-    </form>
+        <!-- Add to Cart form -->
+        <form action="cart" method="post" style="display:inline;">
+            <input type="hidden" name="productId" value="<%= product.getProductID() %>">
+            <input type="hidden" name="action" value="add">
+            <input type="submit" value="Add to Cart">
+        </form>
 
-    <br><br>
-    <a href="productsPageUser.jsp">Back to Products</a>
-<% } else { %>
-    <p>Product not found.</p>
-<% } %>
+        <!-- Buy Now form -->
+        <form action="CheckoutServlet" method="post" style="display:inline; margin-left:10px;">
+            <input type="hidden" name="productId" value="<%= product.getProductID() %>">
+            <input type="hidden" name="action" value="buy">
+            <input type="submit" value="Buy Now">
+        </form>
 
-<jsp:include page="footer.jsp" />
+        <br><br>
+        <a href="productsPageUser.jsp">Back to Products</a>
+    <%
+        } else {
+    %>
+        <p>Product not found or invalid product ID.</p>
+        <a href="productsPageUser.jsp">Back to Products</a>
+    <%
+        }
+    %>
 
+    <jsp:include page="footer.jsp" />
 </body>
 </html>

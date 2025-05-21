@@ -46,32 +46,7 @@ import java.util.List;
 
 public class ProductDAO {
 
-//  public List<Product> searchProducts(String keyword) {
-//  List<Product> products = new ArrayList<>();
-//  String sql = "SELECT * FROM products WHERE Name LIKE ? OR Description LIKE ?";
-//
-//  try (Connection conn = DBConnection.getConnection();
-//       PreparedStatement stmt = conn.prepareStatement(sql)) {
-//
-//      String searchPattern = "%" + keyword + "%";
-//      stmt.setString(1, searchPattern);
-//      stmt.setString(2, searchPattern);
-//
-//      ResultSet rs = stmt.executeQuery();
-//      while (rs.next()) {
-//          Product product = new Product();
-//          product.setProductID(rs.getInt("ProductID"));
-//          product.setName(rs.getString("Name"));
-//          product.setDescription(rs.getString("Description"));
-//          product.setPrice(rs.getDouble("Price"));
-//          products.add(product);
-//      }
-//  } catch (SQLException e) {
-//      e.printStackTrace();
-//  }
-//  return products;
-//}
-	
+
 	public List<Product> searchProducts(String keyword) {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM products WHERE Name LIKE ?";
@@ -174,18 +149,27 @@ public class ProductDAO {
         }
     }
 
-    public boolean updateProductStock(int productId, int newStock) {
-        String sql = "UPDATE products SET Stock = ? WHERE ProductID = ?";
+    public boolean updateProduct(Product product) {
+        String sql = "UPDATE products SET Name = ?, Description = ?, Price = ?, Stock = ?, DateAdded = ?, CategoryID = ?, AdminID = ? WHERE ProductID = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, newStock);
-            stmt.setInt(2, productId);
+
+            stmt.setString(1, product.getName());
+            stmt.setString(2, product.getDescription());
+            stmt.setDouble(3, product.getPrice());
+            stmt.setInt(4, product.getStock());
+            stmt.setDate(5, new java.sql.Date(product.getDateAdded().getTime()));
+            stmt.setInt(6, product.getCategoryID());
+            stmt.setInt(7, product.getAdminID());
+            stmt.setInt(8, product.getProductID());
+
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
+
 
     public boolean deleteProduct(int productId) {
         String sql = "DELETE FROM products WHERE ProductID = ?";

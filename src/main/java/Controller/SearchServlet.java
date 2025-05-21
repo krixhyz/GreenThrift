@@ -16,11 +16,18 @@ public class SearchServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String query = request.getParameter("query");
-        String role = request.getParameter("role");
 
         if (query == null || query.trim().isEmpty()) {
             response.sendRedirect("homepage.jsp");
             return;
+        }
+
+        HttpSession session = request.getSession(false);
+        boolean isAdmin = false;
+
+        if (session != null && session.getAttribute("user") != null) {
+            Model.User user = (Model.User) session.getAttribute("user");
+            isAdmin = "admin".equalsIgnoreCase(user.getRole());
         }
 
         ProductDAO productDAO = new ProductDAO();
@@ -28,7 +35,7 @@ public class SearchServlet extends HttpServlet {
 
         request.setAttribute("results", results);
         request.setAttribute("query", query);
-        request.setAttribute("isAdmin", "admin".equals(role));
+        request.setAttribute("isAdmin", isAdmin); // ✅ pass correct flag
 
         request.getRequestDispatcher("searchResults.jsp").forward(request, response);
     }
