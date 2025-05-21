@@ -294,6 +294,23 @@ import java.util.List;
 
 public class UserDAO {
 
+    // Check if email exists in database (case-insensitive)
+    public static boolean isEmailRegistered(String email) {
+        String sql = "SELECT COUNT(*) FROM users WHERE LOWER(email) = LOWER(?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            
+            return rs.next() && rs.getInt(1) > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     // Create a new user
     public boolean createUser(User user) {
         String sql = "INSERT INTO users (first_name, last_name, username, password, email, phone_number, role, address, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -354,6 +371,25 @@ public class UserDAO {
         return null;
     }
 
+    // Get user by email (case-insensitive)
+    public User getUserByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE LOWER(email) = LOWER(?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, email);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                return extractUserFromResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // Get user by ID
     public User getUserById(int id) {
         String sql = "SELECT * FROM users WHERE id = ?";
@@ -374,17 +410,15 @@ public class UserDAO {
     }
 
     public boolean updateUser(User user) {
-    	
-    	 System.out.println("Updating user with ID: " + user.getId());
-    	 System.out.println("Email: " + user.getEmail());
-    	 System.out.println("First Name: " + user.getFirstname());
-    	 System.out.println("Last Name: " + user.getLastname());
-         System.out.println("Phone: " + user.getPhone());
-         System.out.println("Gender: " + user.getGender());
-   	     System.out.println("Address: " + user.getAddress());
-    	
-    	
-   	    String sql = "UPDATE users SET email = ?, first_name = ?, last_name = ?, phone_number=? , gender = ?, address = ? WHERE id = ?";
+        System.out.println("Updating user with ID: " + user.getId());
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("First Name: " + user.getFirstname());
+        System.out.println("Last Name: " + user.getLastname());
+        System.out.println("Phone: " + user.getPhone());
+        System.out.println("Gender: " + user.getGender());
+        System.out.println("Address: " + user.getAddress());
+    
+        String sql = "UPDATE users SET email = ?, first_name = ?, last_name = ?, phone_number=? , gender = ?, address = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
              
@@ -404,7 +438,7 @@ public class UserDAO {
         }
     }
 
- // Update full profile info
+    // Update full profile info
     public boolean updateUserProfile(User user) {
         String sql = "UPDATE users SET first_name=?, last_name=?, email=?, phone_number=?, gender=?, address=? WHERE id=?";
         try (Connection conn = DBConnection.getConnection();
@@ -426,7 +460,6 @@ public class UserDAO {
         }
     }
 
-
     // Delete a user
     public boolean deleteUser(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
@@ -447,16 +480,16 @@ public class UserDAO {
         List<User> list = new ArrayList<>();
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "SELECT * FROM users"; // use your table name
+            String sql = "SELECT * FROM users";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setEmail(rs.getString("email"));
-                user.setFirstname(rs.getString("firstname"));
-                user.setLastname(rs.getString("lastname"));
-                user.setPhone(rs.getString("phone"));
+                user.setFirstname(rs.getString("first_name"));
+                user.setLastname(rs.getString("last_name"));
+                user.setPhone(rs.getString("phone_number"));
                 user.setGender(rs.getString("gender"));
                 user.setAddress(rs.getString("address"));
                 list.add(user);
@@ -466,6 +499,7 @@ public class UserDAO {
         }
         return list;
     }
+
     // Get all users with role = 'user'
     public List<User> getAllNormalUsers() {
         List<User> users = new ArrayList<>();
