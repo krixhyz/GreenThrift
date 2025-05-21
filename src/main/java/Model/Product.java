@@ -11,23 +11,25 @@ public class Product {
     private Date dateAdded;
     private int categoryID;
     private int adminID;
+    private String imageUrl;
 
     // Default constructor
     public Product() {}
 
-    // Constructor without productID and dateAdded (for adding new products)
-    public Product(String name, String description, double price, int stock, int categoryID, int adminID) {
+    // Constructor for adding new products (without productID and dateAdded)
+    public Product(String name, String description, double price, int stock, int categoryID, int adminID, String imageUrl) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
         this.categoryID = categoryID;
         this.adminID = adminID;
-        this.dateAdded = new Date(); // Or leave null and let DB handle it
+        this.imageUrl = imageUrl;
+        this.dateAdded = new Date(); // Set current date, or let DB handle it
     }
 
     // Full constructor (e.g., from database)
-    public Product(int productID, String name, String description, double price, int stock, Date dateAdded, int categoryID, int adminID) {
+    public Product(int productID, String name, String description, double price, int stock, Date dateAdded, int categoryID, int adminID, String imageUrl) {
         this.productID = productID;
         this.name = name;
         this.description = description;
@@ -36,10 +38,10 @@ public class Product {
         this.dateAdded = dateAdded;
         this.categoryID = categoryID;
         this.adminID = adminID;
+        this.imageUrl = imageUrl;
     }
 
     // Getters and Setters
-
     public int getProductID() {
         return productID;
     }
@@ -104,8 +106,11 @@ public class Product {
         this.adminID = adminID;
     }
 
-	public void setImageUrl(String string) {
-		// TODO Auto-generated method stub
-		
-	}
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
