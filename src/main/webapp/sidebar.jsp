@@ -423,7 +423,6 @@
 </body>
 </html> --%>
 
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -518,9 +517,10 @@
     <a href="${pageContext.request.contextPath}/admin/dashboard?showContacts=true">
         <i class="fas fa-envelope"></i> Contact Inquiries
     </a>
-    <a href="${pageContext.request.contextPath}/logout.jsp">
-        <i class="fas fa-sign-out-alt"></i> Logout
-    </a>
+	<a href="${pageContext.request.contextPath}/logout">
+    <i class="fas fa-sign-out-alt"></i> Logout
+</a>
+
 </div>
 
 <!-- Main Content -->
@@ -532,5 +532,4 @@
 
 </body>
 </html>
-
     
