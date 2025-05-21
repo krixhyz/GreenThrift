@@ -28,7 +28,7 @@
     Product product = null;
 
     try {
-        id = Integer.parseInt(request.getParameter("id"));
+    	id = Integer.parseInt(request.getParameter("productId"));
         ProductDAO dao = new ProductDAO();
         product = dao.getProductById(id);
     } catch (Exception e) {

@@ -11,7 +11,7 @@
     String logoLink = isAdmin ? "productsPageAdmin.jsp" : "homepage.jsp";
 
     // Show search bar only on these pages
-    boolean showSearch = currentPage.endsWith("productPageUser.jsp") || 
+    boolean showSearch = currentPage.endsWith("productsPageUser.jsp") || 
                          currentPage.endsWith("productsPageAdmin.jsp") || 
                          currentPage.endsWith("homepage.jsp");
 %>
