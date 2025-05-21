@@ -4,60 +4,65 @@ import DAO.UserDAO;
 import Model.User;
 import Util.PasswordUtil;
 
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/UserProfileServlet")
 public class UserProfileServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
         User currentUser = (User) session.getAttribute("user");
 
-        if (currentUser == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
-
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String gender = request.getParameter("gender");
+        String address = request.getParameter("address");
 
-        if (email != null && !email.trim().isEmpty()) {
-            currentUser.setEmail(email);
+        String currentPassword = request.getParameter("currentPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
+
+        // Validate new password inputs
+        if (!newPassword.isEmpty() || !confirmPassword.isEmpty()) {
+            if (!PasswordUtil.checkPassword(currentPassword, currentUser.getPassword())) {
+                request.setAttribute("message", "Incorrect current password.");
+                request.getRequestDispatcher("userProfile.jsp").forward(request, response);
+                return;
+            }
+
+            if (!newPassword.equals(confirmPassword)) {
+                request.setAttribute("message", "New password and confirmation do not match.");
+                request.getRequestDispatcher("userProfile.jsp").forward(request, response);
+                return;
+            }
+
+            // Update password
+            String hashedPassword = PasswordUtil.hashPassword(newPassword);
+            currentUser.setPassword(hashedPassword);
         }
 
-        if (password != null && !password.trim().isEmpty()) {
-            currentUser.setPassword(PasswordUtil.hashPassword(password));
-        }
+        // Update other fields
+        currentUser.setEmail(email);
+        currentUser.setGender(gender);
+        currentUser.setAddress(address);
 
         UserDAO userDAO = new UserDAO();
-        boolean updated = userDAO.updateUserProfile(currentUser);
+        boolean updated = userDAO.updateUser(currentUser);
 
         if (updated) {
-            session.setAttribute("user", currentUser);
+            session.setAttribute("user", currentUser); // Update session info
             request.setAttribute("message", "Profile updated successfully.");
         } else {
-            request.setAttribute("message", "Profile update failed.");
+            request.setAttribute("message", "Error updating profile.");
         }
 
-        request.setAttribute("user", currentUser); // Send user to JSP
-        request.getRequestDispatcher("userProfile.jsp").forward(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-
-        if (user == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
-
-        request.setAttribute("user", user);
         request.getRequestDispatcher("userProfile.jsp").forward(request, response);
     }
 }

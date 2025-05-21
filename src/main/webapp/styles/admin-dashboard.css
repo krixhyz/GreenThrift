@@ -326,88 +326,47 @@ Recent Orders Section
  
 @charset "UTF-8";
 
-/* Reset some basics */
+/* Reset basics */
 body, html {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e6f3ea;
 }
 
-/* Sidebar styling */
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 220px;
-    height: 100%;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    padding-top: 20px;
-}
+/* Sidebar styling moved to sidebar.jsp's embedded CSS */
 
-.sidebar h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-weight: normal;
-}
-
-.sidebar ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.sidebar ul li {
-    padding: 15px 20px;
-    border-bottom: 1px solid #34495e;
-}
-
-.sidebar ul li a {
-    color: #ecf0f1;
-    text-decoration: none;
-    display: block;
-}
-
-.sidebar ul li a:hover {
-    background-color: #34495e;
-    border-radius: 4px;
-}
-
-/* Main content styling */
+/* Main content */
 .main-content {
-    margin-left: 220px; /* Same as sidebar width */
+    margin-left: 220px;
     padding: 20px;
-
-    /* Center inner content */
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #e6f3ea;
+    min-height: 100vh;
 }
-
-/* .main-content > * {
-    width: 100%;
-    max-width: 1000px;
-} */
 
 .main-content > * {
     width: 100%;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 0 20px; /* Adds 20px padding on both left and right */
-    box-sizing: border-box; /* Ensures padding doesn't exceed max-width */
+    padding: 0 20px;
+    box-sizing: border-box;
 }
-
 
 h2 {
     margin-top: 0;
     text-align: center;
+    color: #1b3a1a;
 }
 
 /* Welcome Box */
 .welcome-box {
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     padding: 25px 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     margin-bottom: 30px;
     text-align: center;
 }
@@ -415,15 +374,15 @@ h2 {
 .welcome-box h1 {
     font-size: 2.8rem;
     margin: 0 0 10px 0;
-    color: #2c3e50;
+    color: #1b3a1a;
 }
 
 .welcome-box p {
     font-size: 1.1rem;
-    color: #555;
+    color: #2e7d32;
 }
 
-/* Cards Section */
+/* Cards */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -433,10 +392,10 @@ h2 {
 }
 
 .card {
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -444,30 +403,29 @@ h2 {
 }
 
 .card i {
-    color: #2c3e50;
+    color: #2e7d32;
     margin-bottom: 10px;
 }
 
 .card h3 {
-    margin-top: 0;
-    margin-bottom: 5px;
-    color: #2c3e50;
+    margin: 0 0 5px;
+    color: #1b3a1a;
 }
 
 .card p {
     font-size: 2rem;
     margin: 0;
     font-weight: bold;
-    color: #34495e;
+    color: #1b3a1a;
 }
 
-/* Recent Orders Section */
+/* Recent Orders */
 .recent-orders {
     margin-top: 40px;
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
     width: 100%;
 }
 
@@ -475,43 +433,37 @@ h2 {
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 1.4rem;
-    color: #2c3e50;
+    color: #1b3a1a;
     text-align: center;
 }
 
 .recent-orders table {
     width: 100%;
     border-collapse: collapse;
-    font-family: Arial, sans-serif;
+    font-family: inherit;
 }
 
 .recent-orders th, .recent-orders td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #d0e8d0;
 }
 
 .recent-orders th {
-    background-color: #f8f9fa;
+    background-color: #e6f3ea;
     font-weight: 600;
-    color: #333;
+    color: #1b3a1a;
 }
 
 .recent-orders tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f4fbf6;
     cursor: pointer;
 }
- 
-/* Action Section Styles */
-.action-section {
-    width: 100%;
-    margin: 20px 0;
-    text-align: center;
-}
 
+/* Action Button (optional) */
 .action-button {
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background-color: #2e7d32;
+    color: #ffffff;
     border: none;
     padding: 12px 25px;
     border-radius: 6px;
@@ -525,12 +477,8 @@ h2 {
 }
 
 .action-button:hover {
-    background-color: #34495e;
+    background-color: #27682a;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-.action-button i {
-    font-size: 1.1rem;
-}
  
