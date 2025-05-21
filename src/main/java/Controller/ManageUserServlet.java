@@ -123,7 +123,7 @@ public class ManageUserServlet extends HttpServlet {
                     request.setAttribute("user", user);
                     request.getRequestDispatcher("editUser.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("ManageUserServlet"); // If user not found
+                    response.sendRedirect("manageUser"); // If user not found
                 }
                 return;
             } catch (NumberFormatException e) {
@@ -183,7 +183,7 @@ public class ManageUserServlet extends HttpServlet {
                 } else {
                     System.out.println("User not found with ID = " + id);
                 }
-                response.sendRedirect("ManageUserServlet");
+                response.sendRedirect("manageUser");
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 response.sendRedirect("error.jsp");
@@ -197,14 +197,14 @@ public class ManageUserServlet extends HttpServlet {
                 } else {
                     System.out.println("Failed to delete user: ID = " + id);
                 }
-                response.sendRedirect("ManageUserServlet");
+                response.sendRedirect("manageUser");
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 response.sendRedirect("error.jsp");
             }
         } else {
             // Unknown action - redirect to list
-            response.sendRedirect("ManageUserServlet");
+            response.sendRedirect("manageUser");
         }
     }
 }
