@@ -437,6 +437,7 @@
 <html>
 <head>
     <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         body {
             margin: 0;
@@ -476,6 +477,10 @@
             background-color: #34495e;
         }
 
+        .sidebar .active {
+            background-color: #3498db;
+        }
+
         .main-content {
             margin-left: 220px;
             padding: 20px;
@@ -492,13 +497,30 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <h2>Green Thrift</h2>
-  <a href="${pageContext.request.contextPath}/admin/dashboard">Home</a>
-    <a href="${pageContext.request.contextPath}/admin/categories">Categories</a>
-    <a href="${pageContext.request.contextPath}/admin/categories?action=add">Add Category</a>
-    <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp">View Products</a>
-    <a href="${pageContext.request.contextPath}/manageUser.jsp">Users</a>
-    <a href="${pageContext.request.contextPath}/admin/orders">Orders</a>
-	<a href="${pageContext.request.contextPath}/logout">Logout</a>
+    <a href="${pageContext.request.contextPath}/admin/dashboard">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <a href="${pageContext.request.contextPath}/admin/categories">
+        <i class="fas fa-th-list"></i> Categories
+    </a>
+    <a href="${pageContext.request.contextPath}/admin/categories?action=add">
+        <i class="fas fa-plus-circle"></i> Add Category
+    </a>
+    <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp">
+        <i class="fas fa-box"></i> Products
+    </a>
+    <a href="${pageContext.request.contextPath}/ManageUserServlet.jsp">
+        <i class="fas fa-users"></i> Users
+    </a>
+    <a href="${pageContext.request.contextPath}/admin/orders">
+        <i class="fas fa-shopping-cart"></i> Orders
+    </a>
+    <a href="${pageContext.request.contextPath}/admin/dashboard?showContacts=true">
+        <i class="fas fa-envelope"></i> Contact Inquiries
+    </a>
+    <a href="${pageContext.request.contextPath}/logout.jsp">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
 </div>
 
 <!-- Main Content -->
