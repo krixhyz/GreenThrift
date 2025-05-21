@@ -105,7 +105,7 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.UserDAO;
 import Model.User;
 
-@WebServlet("/ManageUserServlet")
+@WebServlet("/manageUser")
 public class ManageUserServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -133,10 +133,10 @@ public class ManageUserServlet extends HttpServlet {
             }
         }
 
-        // Default: show all users
         List<User> users = userDAO.getAllUsers();
         request.setAttribute("userList", users);
-        request.getRequestDispatcher("manageUser.jsp").forward(request, response);
+        request.setAttribute("contentPage", "manageUser.jsp");
+        request.getRequestDispatcher("sidebar.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

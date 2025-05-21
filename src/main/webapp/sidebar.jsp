@@ -508,7 +508,7 @@
     <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp">
         <i class="fas fa-box"></i> Products
     </a>
-    <a href="${pageContext.request.contextPath}/ManageUserServlet.jsp">
+    <a href="${pageContext.request.contextPath}/manageUser">
         <i class="fas fa-users"></i> Users
     </a>
     <a href="${pageContext.request.contextPath}/admin/orders">
