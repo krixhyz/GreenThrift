@@ -83,12 +83,12 @@
     <%@ include file="footer.jsp" %>
 </body>
 </html>
- --%>
+
+ 
+  --%>
  
  
- 
- 
- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%--  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -148,6 +148,77 @@
         </section>
     </main>
     
+    <%@ include file="footer.jsp" %>
+</body>
+</html> --%>
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List, Model.Product, DAO.ProductDAO" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Thrifts - Home</title>
+    <link rel="stylesheet" href="styles/mainCss.css">
+    <link rel="stylesheet" href="styles/homepage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%@ include file="header.jsp" %>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Discover Pre-Loved Fashion</h1>
+                <p>Explore sustainable, high-quality secondhand clothing at Green Thrifts.</p>
+                <a href="productsPageUser.jsp" class="btn primary">Shop Now</a>
+            </div>
+        </section>
+        <section class="categories">
+            <h2>Shop by Category</h2>
+            <div class="category-grid">
+                <%
+                    ProductDAO dao = new ProductDAO();
+                    List<Product> newArrivals = dao.getProductsByCategory(1); // Clothes
+                    List<Product> womenClothing = dao.getProductsByCategory(4); // Women's Clothing
+                    List<Product> menClothing = dao.getProductsByCategory(3); // Men's Clothing
+                    List<Product> accessories = dao.getProductsByCategory(2); // Accessories
+                %>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="<%= newArrivals.isEmpty() ? "https://via.placeholder.com/300x400" : newArrivals.get(0).getImageUrl() != null ? newArrivals.get(0).getImageUrl() : "https://via.placeholder.com/300x400" %>" alt="New Arrivals">
+                    </div>
+                    <h3>New Arrivals</h3>
+                    <a href="productsPageUser.jsp" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="<%= womenClothing.isEmpty() ? "https://via.placeholder.com/300x400" : womenClothing.get(0).getImageUrl() != null ? womenClothing.get(0).getImageUrl() : "https://via.placeholder.com/300x400" %>" alt="Women's Clothing">
+                    </div>
+                    <h3>Women's Clothing</h3>
+                    <a href="productsPageUser.jsp?categoryId=4" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="<%= menClothing.isEmpty() ? "https://via.placeholder.com/300x400" : menClothing.get(0).getImageUrl() != null ? menClothing.get(0).getImageUrl() : "https://via.placeholder.com/300x400" %>" alt="Men's Clothing">
+                    </div>
+                    <h3>Men's Clothing</h3>
+                    <a href="productsPageUser.jsp?categoryId=3" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="<%= accessories.isEmpty() ? "https://via.placeholder.com/300x400" : accessories.get(0).getImageUrl() != null ? accessories.get(0).getImageUrl() : "https://via.placeholder.com/300x400" %>" alt="Accessories">
+                    </div>
+                    <h3>Accessories</h3>
+                    <a href="productsPageUser.jsp?categoryId=2" class="btn secondary">Browse</a>
+                </div>
+            </div>
+        </section>
+    </main>
     <%@ include file="footer.jsp" %>
 </body>
 </html>

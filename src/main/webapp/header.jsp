@@ -82,7 +82,8 @@
 
     // Show search bar on these pages
     boolean showSearch = currentPage.endsWith("productsPageUser.jsp") || 
-                         currentPage.endsWith("productsPageAdmin.jsp");
+                         currentPage.endsWith("productsPageAdmin.jsp")|| 
+                         currentPage.endsWith("searchResults.jsp");
 %>
 
 <header>
