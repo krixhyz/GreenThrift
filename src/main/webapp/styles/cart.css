@@ -1,0 +1,276 @@
+
+ /* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+}
+
+body {
+    background-color: #e6f0e6; /* very light green background */
+    color: #2e4d2e; /* dark green text */
+    padding: 20px;
+}
+
+.cart-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: #f9fff9;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(46, 77, 46, 0.15);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #2c5d2c;
+}
+
+.cart-columns {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Left Column - Cart Items */
+.cart-left {
+    flex: 1 1 65%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background-color: #a3c293;
+    color: #1f3a1f;
+    padding: 12px 10px;
+    font-weight: 600;
+    border-bottom: 2px solid #6fa76f;
+    text-align: left;
+}
+
+tbody td {
+    padding: 12px 10px;
+    vertical-align: middle;
+    border-bottom: 1px solid #d5e1d5;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.product-info img {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1.5px solid #8bb98b;
+}
+
+/* Checkbox styles */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Quantity controls */
+button {
+    background-color: #6fa76f; /* lighter green */
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+button:hover {
+    background-color: #578d57; /* slightly darker on hover */
+}
+
+.quantity-input {
+    width: 40px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #a3c293;
+    border-radius: 4px;
+    padding: 4px 0;
+    margin: 0 6px;
+    background-color: #f0f9f0;
+    user-select: none;
+}
+
+/* Delete button */
+.delete-btn {
+    background-color: #c36b6b; /* lighter red */
+    padding: 6px 14px;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.delete-btn:hover {
+    background-color: #9e5151; /* darker red on hover */
+}
+
+/* Right Column - Summary */
+.cart-right {
+    flex: 1 1 30%;
+    background-color: #d7e9d7;
+    border-radius: 12px;
+    padding: 25px 20px;
+    box-shadow: inset 0 0 8px #b3d1b3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shipping-address h3,
+.order-summary h3 {
+    color: #2a4f2a;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 1.4rem;
+    border-bottom: 2px solid #6fa76f;
+    padding-bottom: 6px;
+}
+
+.shipping-address p {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #375937;
+}
+
+.order-summary p {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    color: #2d562d;
+}
+
+.order-summary hr {
+    border: 0;
+    border-top: 1.5px solid #7eb87e;
+    margin: 15px 0;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-controls button {
+  padding: 6px 12px;
+  font-size: 1rem;
+  color: black; /* <-- Makes the + and - signs black */
+  cursor: pointer;
+  border: 1px solid #333;
+  background-color: #eee;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.quantity-controls button:hover {
+  background-color: #ccc;
+}
+
+.quantity-input {
+  width: 40px;
+  text-align: center;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+
+
+/* Checkout Button */
+.checkout-btn {
+    background-color: #5b8a5b; /* lighter dark green */
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(91, 138, 91, 0.5);
+    color: white;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    width: 100%;
+    letter-spacing: 0.04em;
+}
+
+.checkout-btn:hover {
+    background-color: #477047; /* darker hover */
+    box-shadow: 0 5px 15px rgba(71, 112, 71, 0.7);
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) {
+    .cart-columns {
+        flex-direction: column;
+    }
+
+    .cart-left, .cart-right {
+        flex: 1 1 100%;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table, tbody, tr, td {
+        display: block;
+        width: 100%;
+    }
+
+    tbody tr {
+        margin-bottom: 20px;
+        border-bottom: 2px solid #a3c293;
+        padding-bottom: 15px;
+    }
+
+    tbody td {
+        padding-left: 50%;
+        text-align: right;
+        position: relative;
+    }
+
+    tbody td::before {
+        position: absolute;
+        top: 12px;
+        left: 15px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: 600;
+        color: #4b774b;
+    }
+
+    tbody td:nth-of-type(1)::before { content: "Select"; }
+    tbody td:nth-of-type(2)::before { content: "Product"; }
+    tbody td:nth-of-type(3)::before { content: "Price"; }
+    tbody td:nth-of-type(4)::before { content: "Quantity"; }
+    tbody td:nth-of-type(5)::before { content: "Total"; }
+    tbody td:nth-of-type(6)::before { content: "Action"; }
+}
+ 
