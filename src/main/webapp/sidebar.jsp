@@ -437,59 +437,89 @@
 <head>
     <title>Admin Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-        }
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e6f3ea;
+    }
 
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 220px;
-            height: 100%;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding-top: 20px;
-        }
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 220px;
+        height: 100%;
+        background-color: #a3d9a5;
+        color: #1b3a1a;
+        padding-top: 60px;
+        box-sizing: border-box;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        margin-top: 0;
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            margin: 10px 0;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
+    .sidebar a {
+        display: block;
+        color: #1b3a1a;
+        text-decoration: none;
+        padding: 12px 20px;
+        margin: 8px 15px;
+        border-radius: 8px;
+        background-color: #e6f3ea;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        font-size: 1rem;
+        border-left: 3px solid transparent;
+    }
 
-        .sidebar a:hover {
-            background-color: #34495e;
-        }
+    .sidebar a:hover {
+        background-color: #cce9d6;
+        transform: translateX(5px);
+        border-left: 3px solid #2e7d32;
+        box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
+        color: #1b3a1a;
+    }
 
-        .sidebar .active {
-            background-color: #3498db;
-        }
+    .sidebar a i {
+        margin-right: 10px;
+        color: #2e7d32;
+        transition: transform 0.3s ease;
+    }
 
-        .main-content {
-            margin-left: 220px;
-            padding: 20px;
-            width: calc(100% - 220px);
-        }
+    .sidebar a:hover i {
+        transform: scale(1.1);
+        color: #1b3a1a;
+    }
 
-        h1 {
-            color: #333;
-        }
-    </style>
+    .sidebar a.active {
+        background-color: #d4f0dd !important;
+        border-left: 3px solid #2e7d32;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        padding: 20px;
+        width: calc(100% - 220px);
+        background-color: #e6f3ea;
+        min-height: 100vh;
+    }
+
+    h1 {
+        color: #1b3a1a;
+    }
+</style>
+
 </head>
 <body>
 
@@ -508,7 +538,7 @@
     <a href="${pageContext.request.contextPath}/productsPageAdmin.jsp">
         <i class="fas fa-box"></i> Products
     </a>
-    <a href="${pageContext.request.contextPath}/ManageUserServlet.jsp">
+    <a href="${pageContext.request.contextPath}/manageUser">
         <i class="fas fa-users"></i> Users
     </a>
     <a href="${pageContext.request.contextPath}/admin/orders">

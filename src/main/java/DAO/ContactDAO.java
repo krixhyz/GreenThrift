@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactDAO {
-    private static final String URL = "jdbc:mysql://localhost:3307/coursework";
+    private static final String URL = "jdbc:mysql://localhost:3306/coursework";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 

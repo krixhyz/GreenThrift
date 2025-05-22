@@ -105,7 +105,7 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.UserDAO;
 import Model.User;
 
-@WebServlet("/ManageUserServlet")
+@WebServlet("/manageUser")
 public class ManageUserServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -123,7 +123,7 @@ public class ManageUserServlet extends HttpServlet {
                     request.setAttribute("user", user);
                     request.getRequestDispatcher("editUser.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("ManageUserServlet"); // If user not found
+                    response.sendRedirect("manageUser"); // If user not found
                 }
                 return;
             } catch (NumberFormatException e) {
@@ -133,10 +133,10 @@ public class ManageUserServlet extends HttpServlet {
             }
         }
 
-        // Default: show all users
         List<User> users = userDAO.getAllUsers();
         request.setAttribute("userList", users);
-        request.getRequestDispatcher("manageUser.jsp").forward(request, response);
+        request.setAttribute("contentPage", "manageUser.jsp");
+        request.getRequestDispatcher("sidebar.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -183,7 +183,7 @@ public class ManageUserServlet extends HttpServlet {
                 } else {
                     System.out.println("User not found with ID = " + id);
                 }
-                response.sendRedirect("ManageUserServlet");
+                response.sendRedirect("manageUser");
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 response.sendRedirect("error.jsp");
@@ -197,14 +197,14 @@ public class ManageUserServlet extends HttpServlet {
                 } else {
                     System.out.println("Failed to delete user: ID = " + id);
                 }
-                response.sendRedirect("ManageUserServlet");
+                response.sendRedirect("manageUser");
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 response.sendRedirect("error.jsp");
             }
         } else {
             // Unknown action - redirect to list
-            response.sendRedirect("ManageUserServlet");
+            response.sendRedirect("manageUser");
         }
     }
 }

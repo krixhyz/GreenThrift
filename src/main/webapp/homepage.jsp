@@ -1,241 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Thrifts - Home</title>
-    <link rel="stylesheet" href="styles/mainCss.css">
-</head>
-<body>
-    <%@ include file="header.jsp" %>
-    
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Shop Pre-Loved Fashion</h1>
-                <p>Discover quality secondhand clothing at Green Thrifts.</p>
-                <a href="#shop" class="btn primary">Shop Now</a>
-            </div>
-        </section>
-
-        <!-- New Arrivals Section -->
-        <section class="products" id="shop">
-            <h2>New Arrivals</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 1">
-                    <h3>Vintage Jacket</h3>
-                    <p>$25.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 2">
-                    <h3>Designer Dress</h3>
-                    <p>$45.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 3">
-                    <h3>Denim Jeans</h3>
-                    <p>$20.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 4">
-                    <h3>Knit Sweater</h3>
-                    <p>$30.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Women's Clothing Section -->
-        <section class="products">
-            <h2>Women's Clothing</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 5">
-                    <h3>Floral Blouse</h3>
-                    <p>$18.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 6">
-                    <h3>Maxi Skirt</h3>
-                    <p>$35.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 7">
-                    <h3>Leather Jacket</h3>
-                    <p>$50.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 8">
-                    <h3>Cashmere Sweater</h3>
-                    <p>$40.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Men's Clothing Section -->
-        <section class="products">
-            <h2>Men's Clothing</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 9">
-                    <h3>Plaid Shirt</h3>
-                    <p>$22.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 10">
-                    <h3>Chino Pants</h3>
-                    <p>$30.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 11">
-                    <h3>Hoodie</h3>
-                    <p>$28.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 12">
-                    <h3>Denim Jacket</h3>
-                    <p>$35.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Accessories Section -->
-        <section class="products">
-            <h2>Accessories</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 13">
-                    <h3>Leather Belt</h3>
-                    <p>$15.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 14">
-                    <h3>Scarf</h3>
-                    <p>$12.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 15">
-                    <h3>Sunglasses</h3>
-                    <p>$20.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 16">
-                    <h3>Watch</h3>
-                    <p>$45.00</p>
-                    <a href="#" class="btn add-to-cart">Add to Cart</a>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <%@ include file="footer.jsp" %>
-</body>
-</html> --%>
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Thrifts - Home</title>
-    <link rel="stylesheet" href="styles/mainCss.css">
-</head>
-<body>
-    <%@ include file="header.jsp" %>
-    
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Shop Pre-Loved Fashion</h1>
-                <p>Discover quality secondhand clothing at Green Thrifts.</p>
-                <a href="productsPageUser.jsp#new-arrivals" class="btn primary">Browse</a>
-            </div>
-        </section>
-
-        <!-- New Arrivals Section -->
-        <section class="products" id="shop">
-            <h2>New Arrivals</h2>
-            <div class="product-grid">
-                <!-- Product Cards without Add to Cart -->
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 1">
-                    <h3>Vintage Jacket</h3>
-                    <p>$25.00</p>
-                </div>
-                <!-- Repeat for other cards... -->
-            </div>
-            <a href="productsPageUser.jsp#new-arrivals" class="btn primary">Browse All</a>
-        </section>
-
-        <!-- Women's Clothing Section -->
-        <section class="products">
-            <h2>Women's Clothing</h2>
-            <div class="product-grid">
-                <!-- Product Cards without Add to Cart -->
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 5">
-                    <h3>Floral Blouse</h3>
-                    <p>$18.00</p>
-                </div>
-                <!-- Repeat for other cards... -->
-            </div>
-            <a href="productsPageUser.jsp#women" class="btn primary">Browse All</a>
-        </section>
-
-        <!-- Men's Clothing Section -->
-        <section class="products">
-            <h2>Men's Clothing</h2>
-            <div class="product-grid">
-                <!-- Product Cards without Add to Cart -->
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 9">
-                    <h3>Plaid Shirt</h3>
-                    <p>$22.00</p>
-                </div>
-                <!-- Repeat for other cards... -->
-            </div>
-            <a href="productsPageUser.jsp#men" class="btn primary">Browse All</a>
-        </section>
-
-        <!-- Accessories Section -->
-        <section class="products">
-            <h2>Accessories</h2>
-            <div class="product-grid">
-                <!-- Product Cards without Add to Cart -->
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300x400" alt="Product 13">
-                    <h3>Leather Belt</h3>
-                    <p>$15.00</p>
-                </div>
-                <!-- Repeat for other cards... -->
-            </div>
-            <a href="productPageUser.jsp#accessories" class="btn primary">Browse All</a>
-        </section>
-    </main>
-    
-    <%@ include file="footer.jsp" %>
-</body>
-</html>
- --%>
- 
+<%-- 
  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -244,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Green Thrifts - Home</title>
     <link rel="stylesheet" href="styles/mainCss.css">
+        <link rel="stylesheet" href="styles/homepage.css">
+    
 </head>
 <body>
     <%@ include file="header.jsp" %>
@@ -315,6 +80,145 @@
         </section>
     </main>
     
+    <%@ include file="footer.jsp" %>
+</body>
+</html>
+
+ 
+  --%>
+ 
+ 
+<%--  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Thrifts - Home</title>
+    <link rel="stylesheet" href="styles/mainCss.css">
+    <link rel="stylesheet" href="styles/homepage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%@ include file="header.jsp" %>
+    
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Discover Pre-Loved Fashion</h1>
+                <p>Explore sustainable, high-quality secondhand clothing at Green Thrifts.</p>
+                <a href="productsPageUser.jsp" class="btn primary">Shop Now</a>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <h2>Shop by Category</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="https://via.placeholder.com/300x400" alt="New Arrivals">
+                    </div>
+                    <h3>New Arrivals</h3>
+                    <a href="productsPageUser.jsp" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="https://via.placeholder.com/300x400" alt="Women's Clothing">
+                    </div>
+                    <h3>Women's Clothing</h3>
+                    <a href="productsPageUser.jsp?categoryId=2" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="https://via.placeholder.com/300x400" alt="Men's Clothing">
+                    </div>
+                    <h3>Men's Clothing</h3>
+                    <a href="productsPageUser.jsp?categoryId=1" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="https://via.placeholder.com/300x400" alt="Accessories">
+                    </div>
+                    <h3>Accessories</h3>
+                    <a href="productsPageUser.jsp?categoryId=3" class="btn secondary">Browse</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <%@ include file="footer.jsp" %>
+</body>
+</html> --%>
+
+
+
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List, Model.Product, DAO.ProductDAO" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Thrifts - Home</title>
+    <link rel="stylesheet" href="styles/mainCss.css">
+    <link rel="stylesheet" href="styles/homepage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%@ include file="header.jsp" %>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Discover Pre-Loved Fashion</h1>
+                <p>Explore sustainable, high-quality secondhand clothing at Green Thrifts.</p>
+                <a href="productsPageUser.jsp" class="btn primary">Shop Now</a>
+            </div>
+        </section>
+        <section class="categories">
+            <h2>Shop by Category</h2>
+            <div class="category-grid">
+                <%
+                    ProductDAO dao = new ProductDAO();
+                    List<Product> newArrivals = dao.getProductsByCategory(1); // Clothes
+                    List<Product> womenClothing = dao.getProductsByCategory(4); // Women's Clothing
+                    List<Product> menClothing = dao.getProductsByCategory(3); // Men's Clothing
+                    List<Product> accessories = dao.getProductsByCategory(2); // Accessories
+                %>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="<%= newArrivals.isEmpty() ? "https://via.placeholder.com/300x400" : newArrivals.get(0).getImageUrl() != null ? newArrivals.get(0).getImageUrl() : "https://via.placeholder.com/300x400" %>" alt="New Arrivals">
+                    </div>
+                    <h3>New Arrivals</h3>
+                    <a href="productsPageUser.jsp" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="<%= womenClothing.isEmpty() ? "https://via.placeholder.com/300x400" : womenClothing.get(0).getImageUrl() != null ? womenClothing.get(0).getImageUrl() : "https://via.placeholder.com/300x400" %>" alt="Women's Clothing">
+                    </div>
+                    <h3>Women's Clothing</h3>
+                    <a href="productsPageUser.jsp?categoryId=4" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="<%= menClothing.isEmpty() ? "https://via.placeholder.com/300x400" : menClothing.get(0).getImageUrl() != null ? menClothing.get(0).getImageUrl() : "https://via.placeholder.com/300x400" %>" alt="Men's Clothing">
+                    </div>
+                    <h3>Men's Clothing</h3>
+                    <a href="productsPageUser.jsp?categoryId=3" class="btn secondary">Browse</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="<%= accessories.isEmpty() ? "https://via.placeholder.com/300x400" : accessories.get(0).getImageUrl() != null ? accessories.get(0).getImageUrl() : "https://via.placeholder.com/300x400" %>" alt="Accessories">
+                    </div>
+                    <h3>Accessories</h3>
+                    <a href="productsPageUser.jsp?categoryId=2" class="btn secondary">Browse</a>
+                </div>
+            </div>
+        </section>
+    </main>
     <%@ include file="footer.jsp" %>
 </body>
 </html>

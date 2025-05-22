@@ -4,7 +4,7 @@
 <%
     User user = (User) request.getAttribute("user");
     if (user == null) {
-        response.sendRedirect("ManageUserServlet");
+        response.sendRedirect("manageUser");
         return;
     }
 %>
@@ -21,7 +21,7 @@
     <div class="dashboard-container">
         <h2>Edit User</h2>
 
-        <form method="post" action="ManageUserServlet" class="editUserForm">
+        <form method="post" action="manageUser" class="editUserForm">
             <input type="hidden" name="action" value="update" />
             <input type="hidden" name="id" value="<%= user.getId() %>" />
 
