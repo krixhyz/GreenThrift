@@ -1,7 +1,19 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+ <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Model.CartItem" %>
-
+<%@ page import="DAO.ProductDAO" %>
+<%@ page import="Model.Product" %>
+<%
+    // Initialize ProductDAO instance
+    ProductDAO productDAO = new ProductDAO();
+%>
+<%
+    if (request.getAttribute("cartItems") == null) {
+        response.sendRedirect("cart");
+        return;
+    }
+%>
 <html>
 <head>
     <title>Your Cart</title>
@@ -17,14 +29,6 @@
             const allCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.item-checkbox');
             allCheckbox.checked = Array.from(checkboxes).every(cb => cb.checked);
-            calculateSummary();
-        }
-
-        function changeQuantity(productId, delta) {
-            const qtyInput = document.getElementById('qty-' + productId);
-            let qty = parseInt(qtyInput.value);
-            qty = Math.max(1, qty + delta);
-            qtyInput.value = qty;
             calculateSummary();
         }
 
@@ -49,19 +53,20 @@
             document.getElementById('total-amount').innerText = "Rs. " + total.toFixed(2);
         }
 
-        window.onload = calculateSummary;
+        document.addEventListener("DOMContentLoaded", calculateSummary);
     </script>
 </head>
 <body>
+
 <div class="cart-container">
     <h2>Your Shopping Cart</h2>
+
     <div class="cart-columns">
-        <!-- Left Column: Cart Items -->
         <div class="cart-left">
             <table>
                 <thead>
                 <tr>
-                    <th><input type="checkbox" id="select-all" onclick="toggleSelectAll(this)" checked /></th>
+                    <th><input type="checkbox" id="select-all" onclick="toggleSelectAll(this)" aria-label="Select all items"/></th>
                     <th>Product</th>
                     <th>Price (Each)</th>
                     <th>Quantity</th>
@@ -78,26 +83,39 @@
                 <%
                     } else {
                         for (CartItem item : cartItems) {
-                            double total = item.getTotalPrice();
+                            Product product = productDAO.getProductById(item.getProductId());
+                            if (product == null) continue;
+                            double total = item.getQuantity() * item.getPrice();
                 %>
-                <tr class="cart-item-row" data-price="<%= item.getProductPrice() %>">
-                    <td><input type="checkbox" class="item-checkbox" checked onclick="checkboxChanged()" /></td>
-                    <td class="product-info">
-                        <img src="images/default-product.png" alt="<%= item.getProductName() %>" />
-                        <span><%= item.getProductName() %></span>
-                    </td>
-                    <td>Rs. <%= String.format("%.2f", item.getProductPrice()) %></td>
+                <tr class="cart-item-row" data-price="<%= item.getPrice() %>">
                     <td>
-                        <button type="button" onclick="changeQuantity(<%= item.getProductId() %>, -1)">-</button>
-                        <input type="text" id="qty-<%= item.getProductId() %>" class="quantity-input" value="<%= item.getQuantity() %>" readonly />
-                        <button type="button" onclick="changeQuantity(<%= item.getProductId() %>, 1)">+</button>
+                        <input type="checkbox" class="item-checkbox" name="selectedItems" value="<%= product.getProductID() %>" checked onclick="checkboxChanged()" aria-label="Select <%= product.getName() %>" />
                     </td>
+                    <td class="product-info">
+                        <img src="<%= product.getImageUrl() != null ? product.getImageUrl() : "images/default-product.png" %>" alt="<%= product.getName() %>" width="60" />
+                        <span><%= product.getName() %></span>
+                    </td>
+                    <td>Rs. <%= String.format("%.2f", item.getPrice()) %></td>
+					                    <td>
+					  <div class="quantity-controls">
+					    <form action="UpdateQuantityServlet" method="post" style="display: contents;">
+					      <input type="hidden" name="productId" value="<%= product.getProductID() %>" />
+					      <button type="submit" name="delta" value="-1" aria-label="Decrease quantity of <%= product.getName() %>">-</button>
+					    </form>
+					
+					    <input type="text" id="qty-<%= product.getProductID() %>" class="quantity-input" value="<%= item.getQuantity() %>" readonly aria-label="Quantity of <%= product.getName() %>" />
+					
+					    <form action="UpdateQuantityServlet" method="post" style="display: contents;">
+					      <input type="hidden" name="productId" value="<%= product.getProductID() %>" />
+					      <button type="submit" name="delta" value="1" aria-label="Increase quantity of <%= product.getName() %>">+</button>
+					    </form>
+					  </div>
+					</td>
                     <td>Rs. <%= String.format("%.2f", total) %></td>
                     <td>
-                        <form action="cart" method="post" style="display:inline;">
-                            <input type="hidden" name="action" value="remove">
-                            <input type="hidden" name="productId" value="<%= item.getProductId() %>">
-                            <button type="submit" class="delete-btn">Delete</button>
+                        <form action="RemoveFromCartServlet" method="post" onsubmit="return confirm('Are you sure you want to remove this item?');">
+                            <input type="hidden" name="productId" value="<%= item.getProductId() %>" />
+                            <button type="submit" class="delete-btn" aria-label="Delete <%= product.getName() %> from cart">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -108,11 +126,15 @@
             </table>
         </div>
 
-        <!-- Right Column: Summary -->
         <div class="cart-right">
             <div class="shipping-address">
                 <h3>Shipping Address</h3>
-                <p>123 Green Street,<br /> Kathmandu, Nepal</p><br>
+                <%
+                    String address = (String) request.getAttribute("shippingAddress");
+                    if (address == null) address = "123 Green Street, Kathmandu, Nepal";
+                    String formattedAddress = address.replaceAll(",", "<br/>");
+                %>
+                <p><%= formattedAddress %></p><br>
             </div>
 
             <div class="order-summary">
@@ -121,10 +143,13 @@
                 <p>Shipping Fee: <span id="shipping-fee">Rs. 100.00</span></p>
                 <hr />
                 <p><strong>Total: <span id="total-amount">Rs. 0.00</span></strong></p>
-                <button class="checkout-btn" onclick="alert('Proceeding to checkout...')">Proceed to Checkout</button>
+              <button class="checkout-btn" onclick="window.location.href='Checkout'">Proceed to Checkout</button>
+
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>
+ 

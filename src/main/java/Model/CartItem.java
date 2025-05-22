@@ -1,85 +1,90 @@
 package Model;
 
+import java.util.Date;
+
 public class CartItem {
     private int cartItemId;
+    private int cartId;
     private int productId;
-    private String productName;
-    private double productPrice;
     private int quantity;
-    private Product product;
-    private int userId;
+    private double price;
+    private Date createdAt;
+    private Date updatedAt;
 
+    // Constructor, getters, setters
     public CartItem() {}
+    
+    
 
-    public CartItem(Product product, int quantity) {
-        this.product = product;
-        this.quantity = quantity;
+    public CartItem(int cartItemId, int cartId, int productId, int quantity, double price, Date createdAt,
+			Date updatedAt) {
+		super();
+		this.cartItemId = cartItemId;
+		this.cartId = cartId;
+		this.productId = productId;
+		this.quantity = quantity;
+		this.price = price;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	
+
+    public int getCartItemId() { 
+    	return cartItemId; 
+    }
+    
+    public void setCartItemId(int cartItemId) { 
+    	this.cartItemId = cartItemId; 
     }
 
-    public CartItem(int userId, int productId, int quantity) {
-        this.userId = userId;
-        this.productId = productId;
-        this.quantity = quantity;
+    public int getCartId() { 
+    	return cartId; 
+    }
+    
+    public void setCartId(int cartId) { 
+    	this.cartId = cartId; 
     }
 
-    // Getters and Setters
-    public int getCartItemId() {
-        return cartItemId;
+    public int getProductId() { 
+    	return productId; 
+    }
+    
+    public void setProductId(int productId) { 
+    	this.productId = productId; 
     }
 
-    public void setCartItemId(int cartItemId) {
-        this.cartItemId = cartItemId;
+    public int getQuantity() { 
+    	return quantity; 
+    }
+    
+    public void setQuantity(int quantity) { 
+    	this.quantity = quantity; 
     }
 
-    public int getUserId() {
-        return userId;
+    public double getPrice() { 
+    	return price; 
     }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String name) {
-        this.productName = name;
-    }
-
-    public double getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(double price) {
-        this.productPrice = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getTotalPrice() {
-        return (product != null) ? product.getPrice() * quantity : productPrice * quantity;
+    
+    public void setPrice(double price) { 
+    	this.price = price; 
     }
 }

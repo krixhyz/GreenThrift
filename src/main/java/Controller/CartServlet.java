@@ -1,69 +1,52 @@
 package Controller;
 
+import DAO.CartDAO;
 import Model.CartItem;
 import Model.User;
-import DAO.CartDAO;
-import DAO.ProductDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "CartServlet", value = "/cart")
+@WebServlet("/cart")  // Maps this servlet to handle requests at /cart URL
 public class CartServlet extends HttpServlet {
-    private CartDAO cartDAO;
 
     @Override
-    public void init() {
-        cartDAO = new CartDAO();
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        User user = (session != null) ? (User) session.getAttribute("user") : null;
 
-        if (user == null) {
+        // Check if user is logged in; if not, redirect to login page
+        if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
-        List<CartItem> cartItems = cartDAO.getCartItems(user.getId());
-        double total = cartItems.stream().mapToDouble(CartItem::getTotalPrice).sum();
+        try {
+            User user = (User) session.getAttribute("user");
+            int userId = user.getId(); // Make sure getId() method exists in User class
 
-        request.setAttribute("cartItems", cartItems);
-        request.setAttribute("total", total);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("cart.jsp");
-        dispatcher.forward(request, response);
-    }
+            CartDAO cartDAO = new CartDAO();
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession(false);
-        User user = (session != null) ? (User) session.getAttribute("user") : null;
+            // Fetch cart items for this user
+            List<CartItem> cartItems = cartDAO.getCartItemsByUserId(userId);
 
-        if (user == null) {
-            response.sendRedirect("login.jsp");
-            return;
+            // Optional debug info in server console
+            System.out.println("User ID: " + userId);
+            System.out.println("Cart items retrieved: " + cartItems.size());
+
+            // Set cart items as request attribute for cart.jsp to display
+            request.setAttribute("cartItems", cartItems);
+
+            // Forward request to cart.jsp for rendering
+            RequestDispatcher dispatcher = request.getRequestDispatcher("cart.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "An error occurred while loading your cart.");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-
-        String action = request.getParameter("action");
-        int productId = Integer.parseInt(request.getParameter("productId"));
-
-        switch (action) {
-            case "update":
-                int quantity = Integer.parseInt(request.getParameter("quantity"));
-                CartItem itemToUpdate = new CartItem(user.getId(), productId, quantity);
-                cartDAO.updateCartItem(itemToUpdate);
-                break;
-
-            case "remove":
-                cartDAO.removeCartItem(user.getId(), productId);
-                break;
-        }
-
-        response.sendRedirect("cart");
     }
 }

@@ -1,212 +1,195 @@
 <%-- 
- 
-<%@ page import="DAO.ProductDAO, Model.Product" %>
+<%@ page import="Model.Product" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%
-    int id = 0;
-    Product product = null;
-
-    try {
-        id = Integer.parseInt(request.getParameter("productId"));
-        ProductDAO dao = new ProductDAO();
-        product = dao.getProductById(id);
-    } catch (Exception e) {
-        // Log error for debugging
-        e.printStackTrace();
-    }
+    Product product = (Product) request.getAttribute("product");
+    Object sessionUser = session.getAttribute("user");
+    String userIdValue = (sessionUser != null) ? ((Model.User) sessionUser).getId() + "" : "";
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="styles/mainCss.css">
     <title>Product Details</title>
+    <link rel="stylesheet" href="styles/productDetails.css">
+    <link rel="stylesheet" href="styles/productDetailsToast.css">
 </head>
 <body>
-    <%@ include file="header.jsp" %>
 
-    <%
-        if (product != null) {
+<!-- Back to Products Button (Top-Left Corner) -->
+<a href="productsPageUser.jsp" class="back-button-top">← Back to Products</a>
+
+<!-- Toast container ABOVE the product container -->
+<div id="toast" class="toast">Product added to cart successfully!</div>
+
+<div class="product-container">
+    <% if (product == null) { %>
+        <p>Product not found.</p>
+    <% } else {
+        int stockQuantity = product.getStock();
     %>
+    <div class="product-image-column">
+        <img src="<%= product.getImageUrl() %>" alt="Product Image" class="product-image">
+    </div>
+
+    <div class="product-details-column">
         <h2><%= product.getName() %></h2>
-        <p><strong>Description:</strong> <%= product.getDescription() %></p>
+        <p><%= product.getDescription() %></p>
         <p><strong>Price:</strong> Rs. <%= product.getPrice() %></p>
-        <p><strong>Stock Available:</strong> <%= product.getStock() %></p>
-        <p><strong>Date Added:</strong> <%= product.getDateAdded() %></p>
+        <p><strong>Stock:</strong>
+            <span class='<%= stockQuantity > 0 ? "in-stock" : "out-of-stock" %>'>
+                <%= stockQuantity > 0 ? "In Stock" : "Out of Stock" %>
+            </span>
+        </p>
 
-        <!-- Add to Cart form -->
-        <form action="add-to-cart" method="post" style="display:inline;">
-            <input type="hidden" name="productId" value="<%= product.getProductID() %>">
-            <input type="number" name="quantity" value="1" min="1" max="<%= product.getStock() %>" required>
-            <input type="submit" value="Add to Cart">
-        </form>
+        <div class="button-group">
+            <!-- Add to Cart Form -->
+            <form id="addToCartForm" action="addToCart" method="post">
+                <input type="hidden" name="productId" value="<%= product.getProductID() %>">
+                <input type="hidden" name="price" value="<%= product.getPrice() %>">
+                <button type="submit" class="add-to-cart-button" <%= stockQuantity <= 0 ? "disabled" : "" %>>Add to Cart</button>
+            </form>
 
-        <!-- Buy Now form -->
-        <form action="CheckoutServlet" method="post" style="display:inline; margin-left:10px;">
-            <input type="hidden" name="productId" value="<%= product.getProductID() %>">
-            <input type="hidden" name="action" value="buy">
-            <input type="submit" value="Buy Now">
-        </form>
+            <!-- Buy Now Form -->
+            <form action="buyNow" method="post">
+                <input type="hidden" name="productId" value="<%= product.getProductID() %>">
+                <button type="submit" class="buy-now-button" <%= stockQuantity <= 0 ? "disabled" : "" %>>Buy Now</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-        <br><br>
-        <a href="productsPageUser.jsp">Back to Products</a>
-    <%
-        } else {
-    %>
-        <p>Product not found or invalid product ID.</p>
-        <a href="productsPageUser.jsp">Back to Products</a>
-    <%
-        }
-    %>
+<script>
+    document.getElementById('addToCartForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const form = this;
+        const xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        const formData = new URLSearchParams(new FormData(form)).toString();
 
-    <jsp:include page="footer.jsp" />
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    if (xhr.responseURL.includes('login.jsp')) {
+                        window.location.href = xhr.responseURL;
+                    } else {
+                        const toast = document.getElementById('toast');
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 3000);
+                    }
+                } else {
+                    alert('Failed to add product to cart.');
+                }
+            }
+        };
+        xhr.send(formData);
+    });
+</script>
+
+<% } %>
 </body>
 </html> --%>
-
-
-<%-- <%@ page import="DAO.ProductDAO, Model.Product" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%
-    int id = 0;
-    Product product = null;
-
-    try {
-        id = Integer.parseInt(request.getParameter("productId"));
-        ProductDAO dao = new ProductDAO();
-        product = dao.getProductById(id);
-    } catch (Exception e) {
-        // Log error for debugging
-        e.printStackTrace();
-    }
-%>
-
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Thrifts - Product Details</title>
-    <link rel="stylesheet" href="styles/mainCss.css">
-    <link rel="stylesheet" href="styles/product-details.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-<%@ include file="header.jsp" %>
-
-<main>
-    <section class="product-details">
-        <%
-            if (product != null) {
-        %>
-        <div class="product-card">
-            <div class="product-image">
-                <img src="https://via.placeholder.com/400x500" alt="<%= product.getName() %>">
-            </div>
-            <div class="product-info">
-                <h2><%= product.getName() %></h2>
-                <p class="description"><strong>Description:</strong> <%= product.getDescription() %></p>
-                <p><strong>Price:</strong> Rs. <%= product.getPrice() %></p>
-                <p><strong>Stock Available:</strong> <%= product.getStock() %></p>
-                <p><strong>Date Added:</strong> <%= product.getDateAdded() %></p>
-                <div class="product-actions">
-                    <form action="add-to-cart" method="post" class="cart-form">
-                        <input type="hidden" name="productId" value="<%= product.getProductID() %>">
-                        <input type="number" name="quantity" value="1" min="1" max="<%= product.getStock() %>" required>
-                        <button type="submit" class="btn secondary"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    </form>
-                    <form action="CheckoutServlet" method="post" class="buy-form">
-                        <input type="hidden" name="productId" value="<%= product.getProductID() %>">
-                        <input type="hidden" name="action" value="buy">
-                        <button type="submit" class="btn primary"><i class="fas fa-credit-card"></i> Buy Now</button>
-                    </form>
-                </div>
-                <a href="productsPageUser.jsp" class="btn back"><i class="fas fa-arrow-left"></i> Back to Products</a>
-            </div>
-        </div>
-        <%
-            } else {
-        %>
-        <div class="no-product">
-            <p>Product not found or invalid product ID.</p>
-            <a href="productsPageUser.jsp" class="btn back"><i class="fas fa-arrow-left"></i> Back to Products</a>
-        </div>
-        <%
-            }
-        %>
-    </section>
-</main>
-
-<jsp:include page="footer.jsp" />
-</body>
-</html> --%>
-
-
-<%@ page import="DAO.ProductDAO, Model.Product" %>
+ 
+ 
+ 
+ 
+ 
+ 
+<%@ page import="Model.Product" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    int id = 0;
-    Product product = null;
-    try {
-        id = Integer.parseInt(request.getParameter("productId"));
-        ProductDAO dao = new ProductDAO();
-        product = dao.getProductById(id);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+    Product product = (Product) request.getAttribute("product");
+    Object sessionUser = session.getAttribute("user");
+    String userIdValue = (sessionUser != null) ? ((Model.User) sessionUser).getId() + "" : "";
 %>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Thrifts - Product Details</title>
-    <link rel="stylesheet" href="styles/mainCss.css">
-    <link rel="stylesheet" href="styles/product-details.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="styles/productDetails.css">
+    <link rel="stylesheet" href="styles/productDetailsToast.css">
 </head>
 <body>
-<%@ include file="header.jsp" %>
-<main>
-    <section class="product-details">
-        <%
-            if (product != null) {
-        %>
-        <div class="product-card">
-            <div class="product-image">
-                <img src="<%= product.getImageUrl() != null ? product.getImageUrl() : "https://via.placeholder.com/400x500" %>" alt="<%= product.getName() != null ? product.getName() : "Product Image" %>">
-            </div>
-            <div class="product-info">
-                <h2><%= product.getName() != null ? product.getName() : "Unknown Product" %></h2>
-                <p class="description"><strong>Description:</strong> <%= product.getDescription() != null ? product.getDescription() : "No description available" %></p>
-                <p><strong>Price:</strong> Rs. <%= product.getPrice() %></p>
-                <p><strong>Stock Available:</strong> <%= product.getStock() %></p>
-                <p><strong>Date Added:</strong> <%= product.getDateAdded() != null ? product.getDateAdded() : "N/A" %></p>
-                <div class="product-actions">
-                    <form action="add-to-cart" method="post" class="cart-form">
-                        <input type="hidden" name="productId" value="<%= product.getProductID() %>">
-                        <input type="number" name="quantity" value="1" min="1" max="<%= product.getStock() %>" required>
-                        <button type="submit" class="btn secondary"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                    </form>
-                    <form action="CheckoutServlet" method="post" class="buy-form">
-                        <input type="hidden" name="productId" value="<%= product.getProductID() %>">
-                        <input type="hidden" name="action" value="buy">
-                        <button type="submit" class="btn primary"><i class="fas fa-credit-card"></i> Buy Now</button>
-                    </form>
-                </div>
-                <a href="productsPageUser.jsp" class="btn back"><i class="fas fa-arrow-left"></i> Back to Products</a>
-            </div>
+
+<!-- Back to Products Button (Top-Left Corner) -->
+<a href="productsPageUser.jsp" class="back-button-top">← Back to Products</a>
+
+<!-- Toast container ABOVE the product container -->
+<div id="toast" class="toast">Product added to cart successfully!</div>
+
+<div class="product-container">
+    <% if (product == null) { %>
+        <p>Product not found.</p>
+    <% } else {
+        int stockQuantity = product.getStock();
+    %>
+    <div class="product-image-column">
+        <img src="<%= product.getImageUrl() %>" alt="Product Image" class="product-image">
+    </div>
+
+    <div class="product-details-column">
+        <h2><%= product.getName() %></h2>
+        <p><%= product.getDescription() %></p>
+        <p><strong>Price:</strong> Rs. <%= product.getPrice() %></p>
+        <p><strong>Stock:</strong>
+            <span class='<%= stockQuantity > 0 ? "in-stock" : "out-of-stock" %>'>
+                <%= stockQuantity > 0 ? "In Stock" : "Out of Stock" %>
+            </span>
+        </p>
+
+        <div class="button-group">
+            <!-- Add to Cart Form -->
+            <form id="addToCartForm" action="addToCart" method="post">
+                <input type="hidden" name="productId" value="<%= product.getProductID() %>">
+                <input type="hidden" name="price" value="<%= product.getPrice() %>">
+                <button type="submit" class="add-to-cart-button" <%= stockQuantity <= 0 ? "disabled" : "" %>>Add to Cart</button>
+            </form>
+
+ <form action="Checkout" method="get">
+    <input type="hidden" name="productId" value="<%= product.getProductID() %>">
+    <button type="submit" class="buy-now-button" <%= stockQuantity <= 0 ? "disabled" : "" %>>Buy Now</button>
+</form>
+ 
+ 
+
+
+
+      
+      
+
+
         </div>
-        <%
-            } else {
-        %>
-        <div class="no-product">
-            <p>Product not found or invalid product ID.</p>
-            <a href="productsPageUser.jsp" class="btn back"><i class="fas fa-arrow-left"></i> Back to Products</a>
-        </div>
-        <%
+    </div>
+</div>
+
+<script>
+    document.getElementById('addToCartForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const form = this;
+        const xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        const formData = new URLSearchParams(new FormData(form)).toString();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    if (xhr.responseURL.includes('login.jsp')) {
+                        window.location.href = xhr.responseURL;
+                    } else {
+                        const toast = document.getElementById('toast');
+                        toast.classList.add('show');
+                        setTimeout(() => toast.classList.remove('show'), 3000);
+                    }
+                } else {
+                    alert('Failed to add product to cart.');
+                }
             }
-        %>
-    </section>
-</main>
-<%@ include file="footer.jsp" %>
+        };
+        xhr.send(formData);
+    });
+</script>
+
+<% } %>
 </body>
 </html>

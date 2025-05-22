@@ -1,0 +1,226 @@
+
+
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e1e8f0;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-container {
+    width: 700px;
+    min-height: 450px;
+    background-color: #ffffff;
+    display: flex;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+}
+
+.product-image-column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 30px;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 350px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.product-details-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-details-column h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+.product-details-column p {
+    font-size: 18px;
+    margin: 12px 0;
+    color: #444;
+}
+
+.in-stock {
+    color: green;
+    font-weight: bold;
+}
+
+.out-of-stock {
+    color: red;
+    font-weight: bold;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.button-group button,
+.button-group .add-to-cart-button,
+.button-group .buy-now-button {
+    padding: 12px 28px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.add-to-cart-button {
+    background-color: #28a745; /* Green */
+}
+
+.add-to-cart-button:hover:not(:disabled) {
+    background-color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.buy-now-button {
+    background-color: #007bff; /* Blue */
+}
+
+.buy-now-button:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.button-group button:disabled,
+.add-to-cart-button:disabled,
+.buy-now-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.add-to-cart-button {
+    background-color: #28a745;
+}
+
+.add-to-cart-button:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+.buy-now-button {
+    background-color: #007bff;
+}
+
+.buy-now-button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.add-to-cart-button:disabled,
+.buy-now-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* .toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+  */
+ 
+/*  
+.back-button {
+    background-color: #777;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.back-button:hover {
+    background-color: #555;
+} */
+
+/* New: Back to Products Button (Top-Left) */
+.back-button-top {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #777;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+.back-button-top:hover {
+    background-color: #555;
+}
+
+/* Existing styles assumed to be here… */
+
+
+  
+#toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin: 0 auto;
+    background-color: #4BB543; /* green */
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: visibility 0s, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+#toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+  
